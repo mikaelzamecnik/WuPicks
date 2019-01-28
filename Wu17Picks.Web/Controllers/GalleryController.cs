@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Wu17Picks.Data;
-using Wu17Picks.Data.Models;
 using Wu17Picks.Web.Models;
 
 namespace Wu17Picks.Web.Controllers
@@ -23,6 +19,22 @@ namespace Wu17Picks.Web.Controllers
             {
                 Images = imageList,
                 SearchQuery = ""
+            };
+
+            return View(model);
+        }
+
+        public IActionResult Detail(int id)
+        {
+            var image = _imageService.GetById(id);
+
+            var model = new GalleryDetailModel()
+            {
+                Id = image.Id,
+                Title = image.Title,
+                CreatedOn = image.Created,
+                Url = image.Url,
+                Tags = image.Tags.Select(t => t.Description).ToList()
             };
 
             return View(model);
