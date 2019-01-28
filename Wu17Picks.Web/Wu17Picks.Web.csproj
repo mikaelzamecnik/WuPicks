@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wu17Picks.Data\Wu17Picks.Data.csproj" />
+    <ProjectReference Include="..\Wu17Picks.Services\Wu17Picks.Services.csproj" />
   </ItemGroup>
 
 </Project>

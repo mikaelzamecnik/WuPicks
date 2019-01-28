@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wu17Picks.Web", "Wu17Picks.Web\Wu17Picks.Web.csproj", "{1B351E2F-B5B1-4323-9664-FAA9552185E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wu17Picks.Web", "Wu17Picks.Web\Wu17Picks.Web.csproj", "{1B351E2F-B5B1-4323-9664-FAA9552185E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wu17Picks.Data", "Wu17Picks.Data\Wu17Picks.Data.csproj", "{2B6E6423-F2D6-4313-B2EC-763D34750D82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wu17Picks.Data", "Wu17Picks.Data\Wu17Picks.Data.csproj", "{2B6E6423-F2D6-4313-B2EC-763D34750D82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wu17Picks.Services", "Wu17Picks.Services\Wu17Picks.Services.csproj", "{D89C988F-E60B-457E-BF57-7FF24F0F397C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2B6E6423-F2D6-4313-B2EC-763D34750D82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B6E6423-F2D6-4313-B2EC-763D34750D82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B6E6423-F2D6-4313-B2EC-763D34750D82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D89C988F-E60B-457E-BF57-7FF24F0F397C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D89C988F-E60B-457E-BF57-7FF24F0F397C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D89C988F-E60B-457E-BF57-7FF24F0F397C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D89C988F-E60B-457E-BF57-7FF24F0F397C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
