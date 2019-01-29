@@ -10,7 +10,7 @@ namespace Wu17Picks.Data.Interfaces
     {
         Category GetById(int id);
         IEnumerable<Category> GetAll();
-        Task Add(Category vm);
+        Task AddCategory(Category vm);
 
         // of use?
         //Task Delete(int id);

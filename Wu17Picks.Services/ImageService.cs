@@ -43,14 +43,15 @@ namespace Wu17Picks.Services
             return blobClient.GetContainerReference(containerName);
         }
 
-        public async Task SetImage(string title, string tags, Uri uri)
+        public async Task SetImage(string title, string tags, int categoryid, Uri uri)
         {
             var image = new GalleryImage
             {
                 Title = title,
                 Tags = ParseTags(tags),
                 Url = uri.AbsoluteUri,
-                Created = DateTime.Now
+                Created = DateTime.Now,
+                CategoryId = categoryid
             };
 
             _ctx.Add(image);

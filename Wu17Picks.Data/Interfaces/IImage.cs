@@ -12,7 +12,7 @@ namespace Wu17Picks.Data.Interfaces
         IEnumerable<GalleryImage> GetWithTags(string tag);
         GalleryImage GetById(int id);
         CloudBlobContainer GetBlobContainer(string connectionString, string containerName);
-        Task SetImage(string title, string tags, Uri uri);
+        Task SetImage(string title, string tags, int categoryid, Uri uri);
         List<ImageTag> ParseTags(string tags);
     }
 }

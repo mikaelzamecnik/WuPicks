@@ -24,6 +24,7 @@ namespace Wu17Picks.Web
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IImage, ImageService>();
+            services.AddScoped<ICategory, CategoryService>();
             services.AddMvc();
         }
 

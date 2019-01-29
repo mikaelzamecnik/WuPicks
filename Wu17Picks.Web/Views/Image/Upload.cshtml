@@ -9,11 +9,21 @@
                   id="upload-form">
                 <div class="form-group">
                     <label asp-for="Title"></label>
-                    <input asp-for="Title" class="form-control" />
+                    <input asp-for="Title" class="form-control" required/>
                 </div>
                 <div class="form-group">
                     <label asp-for="Tags"></label>
                     <input asp-for="Tags" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoryId">Category</label>
+                    <select asp-for="CategoryId" class="form-control" required>
+                        <option value="" selected>Select Category</option>
+                        @foreach (var cat in Model.Categories)
+                        {
+                            <option value="@cat.Id">@cat.Name</option>
+                        }
+                    </select>
                 </div>
                 <div>
                     <label class="btn btn-default btn-file">

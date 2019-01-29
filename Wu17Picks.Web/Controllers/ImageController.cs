@@ -13,23 +13,29 @@ namespace Wu17Picks.Web.Controllers
     {
         private readonly IConfiguration _config;
         private IImage _imageService;
+        private ICategory _categoryService;
         private string AzureConnectionString { get; }
 
-        public ImageController(IConfiguration config, IImage imageService)
+        public ImageController(IConfiguration config, IImage imageService, ICategory categoryService)
         {
             _imageService = imageService;
+            _categoryService = categoryService;
             _config = config;
             AzureConnectionString = _config["AzureStorageConnectionString"];
         }
 
         public IActionResult Upload()
         {
-            var model = new UploadImageModel();
+            var cat = _categoryService.GetAll();
+            var model = new UploadImageModel()
+            {
+                Categories = cat
+            };
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadNewImage(IFormFile file, string tags, string title)
+        public async Task<IActionResult> UploadNewImage(IFormFile file, string tags, string title, int categoryid)
         {
             var container = _imageService.GetBlobContainer(AzureConnectionString, "images");
 
@@ -39,7 +45,7 @@ namespace Wu17Picks.Web.Controllers
             // Get Ref to a block blob
             var blockBlob = container.GetBlockBlobReference(fileName);
             await blockBlob.UploadFromStreamAsync(file.OpenReadStream());
-            await _imageService.SetImage(title, tags, blockBlob.Uri);
+            await _imageService.SetImage(title, tags, categoryid, blockBlob.Uri);
 
             return RedirectToAction("Index", "Gallery");
         }

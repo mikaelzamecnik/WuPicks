@@ -26,7 +26,7 @@ namespace Wu17Picks.Services
         {
             return GetAll().Where(img => img.Id == id).First();
         }
-        public async Task Add(Category vm)
+        public async Task AddCategory(Category vm)
         {
             var cat = new Category
             {
