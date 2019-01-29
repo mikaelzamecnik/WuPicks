@@ -1,4 +1,6 @@
-﻿using System.Net.Http.Headers;
+﻿using System;
+using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +16,8 @@ namespace Wu17Picks.Web.Controllers
         private readonly IConfiguration _config;
         private IImage _imageService;
         private ICategory _categoryService;
+        private readonly string[] _supportedMimeTypes = { "image/png", "image/jpeg", "image/jpg" };
+
         private string AzureConnectionString { get; }
 
         public ImageController(IConfiguration config, IImage imageService, ICategory categoryService)
@@ -37,6 +41,11 @@ namespace Wu17Picks.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadNewImage(IFormFile file, string tags, string title, int categoryid)
         {
+            if (!_supportedMimeTypes.Contains(file.ContentType.ToString().ToLower()))
+            {
+                throw new NotSupportedException("Only jpeg and png are supported");
+            }
+
             var container = _imageService.GetBlobContainer(AzureConnectionString, "images");
 
             var content = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
