@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Wu17Picks.Data.Interfaces;
 using Wu17Picks.Web.Models;
@@ -40,5 +41,29 @@ namespace Wu17Picks.Web.Controllers
 
             return View(model);
         }
+
+        //public async Task<IActionResult> DownloadImage(int id)
+        //{
+        //    var imageid = await _imageService.GetById(id);
+
+        //    CloudBlockBlob blockBlob;
+        //    MemoryStream ms = new MemoryStream();
+        //    try
+        //    {
+        //        CloudBlobContainer container = DebitMemo.GetAzureContainer();
+        //        blockBlob = container.GetBlockBlobReference(debitMemo.BlobName);
+        //        await container.CreateIfNotExistsAsync();
+        //        Save blob contents to a file.
+        //        await blockBlob.DownloadToStreamAsync(ms);
+
+        //        Stream blobStream = await blockBlob.OpenReadAsync();
+
+        //        return File(blobStream, blockBlob.Properties.ContentType, debitMemo.BlobName);
+        //    }
+        //    catch (StorageException)
+        //    {
+        //        return Content("File does not exist");
+        //    }
+        //}
     }
 }

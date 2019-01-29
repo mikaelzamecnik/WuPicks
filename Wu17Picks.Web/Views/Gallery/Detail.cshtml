@@ -2,17 +2,28 @@
 
 <div class="container body-content">
     <div class="row image-detail-container">
-        <div class="image-detail drop-shadow">
-            <img src="@Model.Url" alt="@Model.Title" />
+        <div class="image-detail">
+            <img src="@Model.Url" style="width: 50%; height: 50%;" alt="@Model.Title" />
         </div>
     </div>
     <div class="row image-detail-meta">
-        <span>Title: @Model.Title</span>
-        <span>Uploaded: @Model.CreatedOn</span>
+        <span><strong>Title:</strong> @Model.Title</span><br />
+        <span><strong>Category:</strong> @Model.CategoryId</span><br />
+        <span><strong>Uploaded:</strong> @Model.CreatedOn</span>
+
     </div>
     <div class="row">
         <a class="btn btn-primary" asp-controller="Gallery" asp-action="Index">
             Back to Gallery
         </a>
+        <div style="float:right;">
+            <a class="btn btn-primary" href="@Model.Url">
+                Download
+            </a>
+            <a class="btn btn-success" href="#">
+                Add to basket
+            </a>
+        </div>
+        
     </div>
 </div>
