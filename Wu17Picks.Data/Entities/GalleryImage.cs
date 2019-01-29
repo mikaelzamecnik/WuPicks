@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Wu17Picks.Data.Entities;
 
 namespace Wu17Picks.Data.Models
 {
@@ -9,6 +10,8 @@ namespace Wu17Picks.Data.Models
         public string Title { get; set; }
         public DateTime Created { get; set; }
         public string Url { get; set; }
+        public int CategoryId { get; set; }
+        public virtual Category Category { get; set; }
         public virtual IEnumerable<ImageTag> Tags { get; set; }
     }
 }

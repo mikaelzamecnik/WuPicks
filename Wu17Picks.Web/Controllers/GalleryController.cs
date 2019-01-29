@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Wu17Picks.Data;
+using Wu17Picks.Data.Interfaces;
 using Wu17Picks.Web.Models;
 
 namespace Wu17Picks.Web.Controllers
@@ -34,6 +34,7 @@ namespace Wu17Picks.Web.Controllers
                 Title = image.Title,
                 CreatedOn = image.Created,
                 Url = image.Url,
+                CategoryId = image.CategoryId,
                 Tags = image.Tags.Select(t => t.Description).ToList()
             };
 

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Wu17Picks.Data;
+using Wu17Picks.Data.Interfaces;
 using Wu17Picks.Web.Models;
 
 namespace Wu17Picks.Web.Controllers

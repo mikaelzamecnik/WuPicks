@@ -1,11 +1,10 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Wu17Picks.Data.Models;
 
-namespace Wu17Picks.Data
+namespace Wu17Picks.Data.Interfaces
 {
     public interface IImage
     {

@@ -11,6 +11,7 @@ namespace Wu17Picks.Web.Models
         public string Title { get; set; }
         public DateTime CreatedOn { get; set; }
         public string Url { get; set; }
+        public int CategoryId { get; set; }
         public List<string> Tags { get; set; }
     }
 }
