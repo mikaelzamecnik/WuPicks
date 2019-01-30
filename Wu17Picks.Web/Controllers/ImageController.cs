@@ -2,13 +2,11 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Headers;
-using Wu17Picks.Data;
-using Wu17Picks.Data.Interfaces;
+using Wu17Picks.Services.Interfaces;
 using Wu17Picks.Web.Models;
 
 namespace Wu17Picks.Web.Controllers

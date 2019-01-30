@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Wu17Picks.Data;
-using Wu17Picks.Data.Interfaces;
+using Wu17Picks.Services.Interfaces;
 using Wu17Picks.Services;
 
 namespace Wu17Picks.Web
@@ -25,6 +26,12 @@ namespace Wu17Picks.Web
 
             services.AddScoped<IImage, ImageService>();
             services.AddScoped<ICategory, CategoryService>();
+            services.AddMemoryCache();
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".Picks.Cart.Session";
+                options.IdleTimeout = TimeSpan.FromHours(3);
+            });
             services.AddMvc();
         }
 
@@ -40,6 +47,7 @@ namespace Wu17Picks.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseSession();
             app.UseStaticFiles();
 
             app.UseMvc(routes =>

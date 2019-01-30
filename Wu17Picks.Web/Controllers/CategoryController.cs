@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Wu17Picks.Data.Entities;
-using Wu17Picks.Data.Interfaces;
+using Wu17Picks.Services.Interfaces;
 using Wu17Picks.Web.Models;
 
 namespace Wu17Picks.Web.Controllers

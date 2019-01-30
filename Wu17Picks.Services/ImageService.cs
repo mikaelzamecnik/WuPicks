@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Wu17Picks.Data;
-using Wu17Picks.Data.Interfaces;
+using Wu17Picks.Services.Interfaces;
 using Wu17Picks.Data.Models;
 
 namespace Wu17Picks.Services

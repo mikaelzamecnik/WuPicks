@@ -2,7 +2,7 @@
     padding: 24px;
 }
 .gallery-image {
-    background-size:auto;
+    background-size:cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 280px;

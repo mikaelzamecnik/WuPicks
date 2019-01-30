@@ -1,12 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Wu17Picks.Data;
 using Wu17Picks.Data.Entities;
-using Wu17Picks.Data.Interfaces;
+using Wu17Picks.Services.Interfaces;
 
 namespace Wu17Picks.Services
 {
@@ -36,12 +33,5 @@ namespace Wu17Picks.Services
             _ctx.Add(cat);
             await _ctx.SaveChangesAsync();
         }
-
-        // Of use?
-
-        //public Task Delete(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

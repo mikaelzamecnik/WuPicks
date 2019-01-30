@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Wu17Picks.Web.Models
 {
@@ -13,5 +11,10 @@ namespace Wu17Picks.Web.Models
         public string Url { get; set; }
         public int CategoryId { get; set; }
         public List<string> Tags { get; set; }
+
+        public GalleryDetailModel()
+        {
+            Id = Id;
+        }
     }
 }

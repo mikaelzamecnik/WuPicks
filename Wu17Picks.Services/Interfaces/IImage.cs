@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Wu17Picks.Data.Models;
 
-namespace Wu17Picks.Data.Interfaces
+namespace Wu17Picks.Services.Interfaces
 {
     public interface IImage
     {
