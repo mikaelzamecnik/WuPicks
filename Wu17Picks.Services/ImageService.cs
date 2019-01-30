@@ -42,7 +42,6 @@ namespace Wu17Picks.Services
             var blobClient = storageAccount.CreateCloudBlobClient();
             return blobClient.GetContainerReference(containerName);
         }
-
         public async Task SetImage(string title, string tags, int categoryid, Uri uri)
         {
             var image = new GalleryImage

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Net.Http.Headers;
 using Wu17Picks.Data;
 using Wu17Picks.Data.Interfaces;
 using Wu17Picks.Web.Models;
@@ -49,7 +51,7 @@ namespace Wu17Picks.Web.Controllers
             var container = _imageService.GetBlobContainer(AzureConnectionString, "images");
 
             var content = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
-            var fileName = content.FileName.Trim('"');
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
             // Get Ref to a block blob
             var blockBlob = container.GetBlockBlobReference(fileName);
@@ -58,5 +60,33 @@ namespace Wu17Picks.Web.Controllers
 
             return RedirectToAction("Index", "Gallery");
         }
+
+        // Todo Testing to zip files on azure
+
+        // No need to use single download ?
+
+        //public async Task<IActionResult> DownloadImage(int id)
+        //{
+        //    var imageid = await _imageService.GetById(id);
+
+        //    CloudBlockBlob blockBlob;
+        //    MemoryStream ms = new MemoryStream();
+        //    try
+        //    {
+        //        CloudBlobContainer container = DebitMemo.GetAzureContainer();
+        //        blockBlob = container.GetBlockBlobReference(debitMemo.BlobName);
+        //        await container.CreateIfNotExistsAsync();
+        //        Save blob contents to a file.
+        //        await blockBlob.DownloadToStreamAsync(ms);
+
+        //        Stream blobStream = await blockBlob.OpenReadAsync();
+
+        //        return File(blobStream, blockBlob.Properties.ContentType, debitMemo.BlobName);
+        //    }
+        //    catch (StorageException)
+        //    {
+        //        return Content("File does not exist");
+        //    }
+        //}
     }
 }

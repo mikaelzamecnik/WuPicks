@@ -9,17 +9,21 @@ namespace Wu17Picks.Web.Controllers
     public class GalleryController : Controller
     {
         private readonly IImage _imageService;
-        public GalleryController(IImage imageService)
+        private ICategory _categoryService;
+        public GalleryController(IImage imageService, ICategory categoryService)
         {
+            _categoryService = categoryService;
             _imageService = imageService;
         }
         public IActionResult Index()
         {
+            var cat = _categoryService.GetAll();
             var imageList = _imageService.GetAll();
             var model = new GalleryIndexModel()
             {
                 Images = imageList,
-                SearchQuery = ""
+                SearchQuery = "",
+                Categories = cat
             };
 
             return View(model);
@@ -42,28 +46,5 @@ namespace Wu17Picks.Web.Controllers
             return View(model);
         }
 
-        //public async Task<IActionResult> DownloadImage(int id)
-        //{
-        //    var imageid = await _imageService.GetById(id);
-
-        //    CloudBlockBlob blockBlob;
-        //    MemoryStream ms = new MemoryStream();
-        //    try
-        //    {
-        //        CloudBlobContainer container = DebitMemo.GetAzureContainer();
-        //        blockBlob = container.GetBlockBlobReference(debitMemo.BlobName);
-        //        await container.CreateIfNotExistsAsync();
-        //        Save blob contents to a file.
-        //        await blockBlob.DownloadToStreamAsync(ms);
-
-        //        Stream blobStream = await blockBlob.OpenReadAsync();
-
-        //        return File(blobStream, blockBlob.Properties.ContentType, debitMemo.BlobName);
-        //    }
-        //    catch (StorageException)
-        //    {
-        //        return Content("File does not exist");
-        //    }
-        //}
     }
 }
