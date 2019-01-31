@@ -1,4 +1,9 @@
-﻿.gallery-content {
+﻿#picks-text {
+    font-family: 'Indie Flower', cursive;
+    color: hotpink;
+    font-size: 36px;
+}
+.gallery-content {
     padding: 24px;
 }
 .gallery-image {
@@ -47,6 +52,7 @@
 }
 
 body {
+    font-family: 'Oxygen', sans-serif;
     padding-top: 50px;
     padding-bottom: 20px;
 }

@@ -7,6 +7,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="~/gfx/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="~/gfx/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="~/gfx/favicon-16x16.png">
+    <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -19,21 +21,27 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-fixed-top">
+        <div class="navbar-header">
+            <a asp-controller="Gallery" asp-action="Index" class="navbar-brand">
+                <span id="picks-text">P i c k s</span>
+            </a>
+        </div>
         <div class="container">
-            <div class="navbar-header">
-                <a asp-area="" asp-controller="Gallery" asp-action="Index" class="navbar-brand">Picks</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a asp-controller="Image" asp-action="Upload">Upload</a>
-                    </li>
-                    <li>
-                        <a asp-controller="Category" asp-action="Index">Add Category</a>
-                    </li>
-                </ul>
-            </div>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a asp-controller="Gallery" asp-action="Index">Gallery</a>
+                </li>
+                <li>
+                    <a asp-controller="Image" asp-action="Upload">Upload</a>
+                </li>
+                <li>
+                    <a asp-controller="Category" asp-action="Index">Add Category</a>
+                </li>
+                <li>
+                    <a asp-controller="Cart" asp-action="Index">Show Cart <span class="badge badge-dark">@ViewBag.total</span></a>
+                </li>
+            </ul>
         </div>
     </nav>
     <div class="container body-content">
