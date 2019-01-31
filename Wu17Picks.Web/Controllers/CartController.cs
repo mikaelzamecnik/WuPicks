@@ -66,6 +66,12 @@ namespace Wu17Picks.Web.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return RedirectToAction("Index");
         }
+        // TODO download as zip
+
+        public IActionResult DownloadAsZip()
+        {
+            return Ok();
+        }
         private int Exists(List<Item> cart, int id)
         {
             for(int i = 0; i< cart.Count; i++)
