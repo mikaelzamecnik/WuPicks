@@ -32,8 +32,10 @@ namespace Wu17Picks.Web.Controllers
         {
             if(SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
             {
-                var cart = new List<Item>();
-                cart.Add(new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1 });
+                var cart = new List<Item>
+                {
+                    new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1 }
+                };
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
             else
@@ -50,6 +52,18 @@ namespace Wu17Picks.Web.Controllers
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Remove(int id)
+        {
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            int index = Exists(cart, id);
+            if(id > 0)
+            cart.RemoveAt(index);
+            if (id == 0)
+            cart.Clear();
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return RedirectToAction("Index");
         }
         private int Exists(List<Item> cart, int id)
