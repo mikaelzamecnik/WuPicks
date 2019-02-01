@@ -57,6 +57,7 @@ namespace Wu17Picks.Web.Controllers
 
         public IActionResult Remove(int id)
         {
+            //test CI
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             int index = Exists(cart, id);
             if(id > 0)
