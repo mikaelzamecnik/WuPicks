@@ -14,8 +14,8 @@ namespace Wu17Picks.Web.Controllers
     public class ImageController : Controller
     {
         private readonly IConfiguration _config;
-        private IImage _imageService;
-        private ICategory _categoryService;
+        private readonly IImage _imageService;
+        private readonly ICategory _categoryService;
         private readonly string[] _supportedMimeTypes = { "image/png", "image/jpeg", "image/jpg" };
 
         private string AzureConnectionString { get; }

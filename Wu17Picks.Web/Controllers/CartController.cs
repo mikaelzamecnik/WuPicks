@@ -13,7 +13,7 @@ namespace Wu17Picks.Web.Controllers
     {
         // TODO Refactor this entire controller
 
-        private IImage _imageService;
+        private readonly IImage _imageService;
 
         public CartController(IImage imageService)
         {

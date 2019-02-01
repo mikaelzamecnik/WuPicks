@@ -12,7 +12,7 @@ namespace Wu17Picks.Web.Controllers
     public class GalleryController : Controller
     {
         private readonly IImage _imageService;
-        private ICategory _categoryService;
+        private readonly ICategory _categoryService;
         public GalleryController(IImage imageService, ICategory categoryService)
         {
             _categoryService = categoryService;
