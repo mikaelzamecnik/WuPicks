@@ -60,9 +60,13 @@ namespace Wu17Picks.Web.Controllers
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             int index = Exists(cart, id);
             if(id > 0)
-            cart.RemoveAt(index);
+            {
+                cart.RemoveAt(index);
+            }
             if (id == 0)
-            cart.Clear();
+            {
+                cart.Clear();
+            }
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return RedirectToAction("Index");
         }
