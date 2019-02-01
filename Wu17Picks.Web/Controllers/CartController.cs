@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
+using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
 using Wu17Picks.Data.Entities;
 using Wu17Picks.Services.Helpers;
 using Wu17Picks.Services.Interfaces;
@@ -14,10 +19,12 @@ namespace Wu17Picks.Web.Controllers
         // TODO Refactor this entire controller
 
         private readonly IImage _imageService;
+        private readonly string _basePath;
 
         public CartController(IImage imageService)
         {
             _imageService = imageService;
+            _basePath = "https://wustore.blob.core.windows.net/images/";
         }
 
         public IActionResult Index()
@@ -72,11 +79,27 @@ namespace Wu17Picks.Web.Controllers
             return RedirectToAction("Index");
         }
         // TODO download as zip
+            public IActionResult DownloadAsZip()
+            {
+                var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
 
-        public IActionResult DownloadAsZip()
-        {
-            return Ok();
-        }
+            if (cart == null || cart.Count == 0)
+                    return BadRequest();
+
+
+                byte[] bytes;
+
+                using (var ms = new MemoryStream())
+                {
+                    using (var imagezip = new ZipArchive(ms, ZipArchiveMode.Create, true))
+                        foreach (var image in cart)
+
+                    ms.Position = 0;
+                    bytes = ms.ToArray();
+                }
+
+                return File(bytes, "application/zip", "images.zip");
+            }
         private int Exists(List<Item> cart, int id)
         {
             for(int i = 0; i< cart.Count; i++)
