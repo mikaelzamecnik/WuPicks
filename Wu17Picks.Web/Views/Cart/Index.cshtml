@@ -1,16 +1,28 @@
 ﻿<div class="container body-content">
     <div class="row image-detail-container">
         <div class="image-detail">
-            @foreach (var item in ViewBag.cart)
+            @if (ViewBag.cart == null)
             {
             <div>
-                <img src="@item.GalleryImage.Url" style="width:10%;height:10%;" />
-                <small><a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.GalleryImage.Id">Remove from cart</a></small>
+                <p>Empty Cart</p>
 
                 <hr />
             </div>
             }
-                <div class="row">Total Ammount: <strong>@ViewBag.total</strong></div><br />
+            else
+            {
+                @foreach (var item in ViewBag.cart)
+                {
+                    <div>
+                        <img src="@item.GalleryImage.Url" style="width:10%;height:10%;" />
+                        <small><a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.GalleryImage.Id">Remove from cart</a></small>
+
+                        <hr />
+                    </div>
+                }
+            }
+
+            <div class="row">Total Ammount: <strong>@ViewBag.total</strong></div><br />
             <div class="row">
                 <a class="btn btn-primary" asp-controller="Gallery" asp-action="Index">
                     Back to Gallery

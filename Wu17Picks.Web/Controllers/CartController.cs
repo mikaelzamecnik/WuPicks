@@ -31,7 +31,7 @@ namespace Wu17Picks.Web.Controllers
         {
             var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             ViewBag.cart = cart;
-            ViewBag.total = cart.Sum(item => item.Quantity);
+            //ViewBag.total = cart.Sum(item => item.Quantity);
             return View();
         }
         [Route("add/{id}")]
