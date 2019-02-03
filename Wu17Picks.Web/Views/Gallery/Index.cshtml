@@ -2,16 +2,6 @@
 
 <div class="container body-content">
     <div class="row gallery-content">
-        <div class="form-group">
-            <label asp-for="CategoryId">Select Category</label>
-            <select asp-for="CategoryId" class="form-control" onchange();>
-                <option value="" selected>-- All --</option>
-                @foreach (var cat in Model.Categories)
-                {
-                    <option value="@cat.Id">@cat.Name</option>
-                }
-            </select>
-        </div>
         <hr />
         <h6><strong>Latest Images</strong></h6>
         @foreach (var image in Model.Images)
@@ -21,6 +11,8 @@
                 <div class="gallery-image" style="background-image:url(@image.Url)">
                 </div>
             </a>
+            <!--Just needed for the categoryName-->
+            @foreach (var cat in Model.Categories) { }
             <div class="text-image">@image.Category.Name</div>
         </div>
         }

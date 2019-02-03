@@ -41,10 +41,11 @@ namespace Wu17Picks.Web
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Shared/Error");
             }
 
             app.UseSession();

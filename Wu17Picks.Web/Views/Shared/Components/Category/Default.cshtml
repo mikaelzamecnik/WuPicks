@@ -1,0 +1,31 @@
+﻿@model IEnumerable<string>
+
+@*<ul class="nav nav-pills nav-stacked">
+    <li class="@(ViewBag.SelectedCategory == null ? "active" : "")">
+        <a asp-action="Index"
+           asp-controller="Gallery"
+           asp-route-selectedCategory="">
+            Alla Produkter
+        </a>
+    </li>
+    @foreach (var cat in Model)
+    {
+        <li class="@(cat == ViewBag.SelectedCategory ? "active": "")">
+            <a asp-controller="Gallery"
+               asp-action="Index"
+               asp-route-selectedCategory="@cat"
+               asp-route-page="1">@cat</a>
+        </li>
+    }
+</ul>*@
+
+
+
+<label>Select Category</label>
+<select class="form-control">
+    <option value="@(ViewBag.SelectedCategory == null ? "active" : "")" selected>-- All --</option>
+    @foreach (var cat in Model)
+    {
+        <option value="@(cat == ViewBag.SelectedCategory ? "active": "")">@cat</option>
+    }
+</select>

@@ -12,6 +12,7 @@ namespace Wu17Picks.Web.Models
         public IEnumerable<GalleryImage> Images { get; set; }
         public IEnumerable<Category> Categories { get; set; }
         public int CategoryId { get; set; }
+        public string SelectedCategory { get; set; }
         public string SearchQuery { get; set; }
     }
 }

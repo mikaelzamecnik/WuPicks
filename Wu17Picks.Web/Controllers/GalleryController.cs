@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Wu17Picks.Services.Interfaces;
 using Wu17Picks.Web.Models;
@@ -14,15 +15,19 @@ namespace Wu17Picks.Web.Controllers
             _categoryService = categoryService;
             _imageService = imageService;
         }
-        public IActionResult Index()
+        public IActionResult Index(string selectedCategory)
         {
             var cat = _categoryService.GetAll();
-            var imageList = _imageService.GetAll();
+            var imageList = _imageService.GetAll()
+                .Where(p => selectedCategory == null || 
+                p.Category.Name.Equals(selectedCategory, StringComparison.InvariantCultureIgnoreCase))
+                .OrderBy(i=> i.Created);
             var model = new GalleryIndexModel()
             {
-                Images = imageList.OrderBy(i => i.Created),
+                Images = imageList,
                 SearchQuery = "",
-                Categories = cat
+                Categories = cat,
+                SelectedCategory = selectedCategory
             };
 
             return View(model);
