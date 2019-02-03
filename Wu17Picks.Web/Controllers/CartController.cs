@@ -11,6 +11,7 @@ using Microsoft.WindowsAzure.Storage.Auth;
 using Wu17Picks.Data.Entities;
 using Wu17Picks.Services.Helpers;
 using Wu17Picks.Services.Interfaces;
+using Wu17Picks.Web.Models;
 
 namespace Wu17Picks.Web.Controllers
 {
@@ -31,7 +32,7 @@ namespace Wu17Picks.Web.Controllers
         {
             var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             ViewBag.cart = cart;
-            //ViewBag.total = cart.Sum(item => item.Quantity);
+            ViewBag.total = cart.Sum(item => item.Quantity);
             return View();
         }
         [Route("add/{id}")]
@@ -78,27 +79,38 @@ namespace Wu17Picks.Web.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return RedirectToAction("Index");
         }
+        // TODO download single file från cloud storage 
+        public IActionResult SingleDownload()
+        {
+            return Ok("Nope");
+        }
         // TODO download as zip
-            public IActionResult DownloadAsZip()
+        public IActionResult DownloadAsZip()
             {
                 var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
 
             if (cart == null || cart.Count == 0)
-                    return BadRequest();
+            {
+                return BadRequest();
+            } else
 
+            {
 
+                // Get images from Url in current session ???
+                var images = _imageService.GetAll();
                 byte[] bytes;
 
                 using (var ms = new MemoryStream())
                 {
                     using (var imagezip = new ZipArchive(ms, ZipArchiveMode.Create, true))
-                        foreach (var image in cart)
+                        foreach (var image in images)
+                            ms.CanRead.Equals(cart);
 
-                    ms.Position = 0;
+                            ms.Position = 0;
                     bytes = ms.ToArray();
                 }
-
                 return File(bytes, "application/zip", "images.zip");
+            } 
             }
         private int Exists(List<Item> cart, int id)
         {

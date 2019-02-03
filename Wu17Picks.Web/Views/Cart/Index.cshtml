@@ -1,35 +1,32 @@
 ﻿<div class="container body-content">
     <div class="row image-detail-container">
         <div class="image-detail">
-            @if (ViewBag.cart == null)
+            @foreach (var item in ViewBag.cart)
             {
             <div>
-                <p>Empty Cart</p>
+                <img src="@item.GalleryImage.Url" style="width:10%;height:10%;border-radius:10px;" /><br /><br />
+                <a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.GalleryImage.Id">
+                    <i style="font-size: 14px;color:darkred" class="fas fa-trash-alt"> Delete</i>
+                </a><br /><br />
+                          <a asp-controller="Cart" asp-action="SingleDownload" asp-route-id="@item.GalleryImage.Id">
+                              <i style="font-size: 14px;color:darkgreen;" class="fas fa-cloud-download-alt"> Download</i>
+                          </a>
+
 
                 <hr />
             </div>
             }
-            else
-            {
-                @foreach (var item in ViewBag.cart)
-                {
-                    <div>
-                        <img src="@item.GalleryImage.Url" style="width:10%;height:10%;" />
-                        <small><a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.GalleryImage.Id">Remove from cart</a></small>
-
-                        <hr />
-                    </div>
-                }
-            }
-
             <div class="row">Total Ammount: <strong>@ViewBag.total</strong></div><br />
             <div class="row">
                 <a class="btn btn-primary" asp-controller="Gallery" asp-action="Index">
                     Back to Gallery
                 </a>
-                <a class="btn btn-warning" asp-controller="Cart" asp-action="DownloadAsZip">
-                    Compress Cart and Download Zip
-                </a>
+                @if (ViewBag.total > 1)
+                {
+                    <a class="btn btn-warning" asp-controller="Cart" asp-action="DownloadAsZip">
+                        Compress Cart and Download Zip
+                    </a>
+                }
                 <div style="float:right;">
                     <a class="btn btn-danger" asp-controller="Cart" asp-action="Remove">
                         Empty Cart
@@ -37,5 +34,5 @@
                 </div>
             </div>
         </div>
-        </div>
     </div>
+</div>
