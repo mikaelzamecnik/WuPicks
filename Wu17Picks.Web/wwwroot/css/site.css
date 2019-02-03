@@ -13,6 +13,12 @@
     height: 280px;
     width: 280px;
 }
+.navbar {
+    background-color:rebeccapurple!important;
+}
+.menu-text {
+    color:white;
+}
 .gallery-image-container {
     padding: 8px;
     background: #fff;
@@ -22,6 +28,8 @@
     width: 300px;
     margin: 12px;
     position: relative;
+    text-align: center;
+    color: black;
 }
 .image-detail-container {
     text-align: left;
@@ -32,6 +40,17 @@
 }
 .image-detail-meta {
     padding: 12px;
+}
+.text-image {
+    position: absolute;
+    bottom: 18px;
+    right: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: rgba(255, 0, 255, 0.5);
+    border-radius: 3px;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 .submit {
     padding: 2%;

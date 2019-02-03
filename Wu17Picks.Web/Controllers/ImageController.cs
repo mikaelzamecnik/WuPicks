@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Headers;
 using Wu17Picks.Services.Interfaces;
@@ -14,17 +15,19 @@ namespace Wu17Picks.Web.Controllers
     public class ImageController : Controller
     {
         private readonly IConfiguration _config;
+        private readonly IDistributedCache _cache;
         private readonly IImage _imageService;
         private readonly ICategory _categoryService;
         private readonly string[] _supportedMimeTypes = { "image/png", "image/jpeg", "image/jpg" };
 
         private string AzureConnectionString { get; }
 
-        public ImageController(IConfiguration config, IImage imageService, ICategory categoryService)
+        public ImageController(IConfiguration config, IImage imageService, ICategory categoryService, IDistributedCache cache)
         {
             _imageService = imageService;
             _categoryService = categoryService;
             _config = config;
+            _cache = cache;
             AzureConnectionString = _config["AzureStorageConnectionString"];
         }
 
@@ -58,33 +61,5 @@ namespace Wu17Picks.Web.Controllers
 
             return RedirectToAction("Index", "Gallery");
         }
-
-        // Todo Testing to zip files on azure
-
-        // No need to use single download ?
-
-        //public async Task<IActionResult> DownloadImage(int id)
-        //{
-        //    var imageid = await _imageService.GetById(id);
-
-        //    CloudBlockBlob blockBlob;
-        //    MemoryStream ms = new MemoryStream();
-        //    try
-        //    {
-        //        CloudBlobContainer container = DebitMemo.GetAzureContainer();
-        //        blockBlob = container.GetBlockBlobReference(debitMemo.BlobName);
-        //        await container.CreateIfNotExistsAsync();
-        //        Save blob contents to a file.
-        //        await blockBlob.DownloadToStreamAsync(ms);
-
-        //        Stream blobStream = await blockBlob.OpenReadAsync();
-
-        //        return File(blobStream, blockBlob.Properties.ContentType, debitMemo.BlobName);
-        //    }
-        //    catch (StorageException)
-        //    {
-        //        return Content("File does not exist");
-        //    }
-        //}
     }
 }

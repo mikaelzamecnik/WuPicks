@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Wu17Picks.Data.Entities;
+using Wu17Picks.Data.Models;
 
 namespace Wu17Picks.Web.Models
 {
@@ -10,6 +12,8 @@ namespace Wu17Picks.Web.Models
         public DateTime CreatedOn { get; set; }
         public string Url { get; set; }
         public int CategoryId { get; set; }
+        public GalleryImage Images { get; set; }
+        public Category Categories { get; set; }
         public List<string> Tags { get; set; }
 
         public GalleryDetailModel()

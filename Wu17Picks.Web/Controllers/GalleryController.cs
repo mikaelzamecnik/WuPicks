@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Wu17Picks.Data.Entities;
-using Wu17Picks.Data.Models;
-using Wu17Picks.Services.Helpers;
 using Wu17Picks.Services.Interfaces;
 using Wu17Picks.Web.Models;
 
@@ -24,7 +20,7 @@ namespace Wu17Picks.Web.Controllers
             var imageList = _imageService.GetAll();
             var model = new GalleryIndexModel()
             {
-                Images = imageList,
+                Images = imageList.OrderBy(i => i.Created),
                 SearchQuery = "",
                 Categories = cat
             };

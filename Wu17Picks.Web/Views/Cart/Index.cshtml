@@ -8,7 +8,7 @@
                 <a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.GalleryImage.Id">
                     <i style="font-size: 14px;color:darkred" class="fas fa-trash-alt"> Delete</i>
                 </a><br /><br />
-                          <a asp-controller="Cart" asp-action="SingleDownload" asp-route-id="@item.GalleryImage.Id">
+                          <a href="@item.GalleryImage.Url">
                               <i style="font-size: 14px;color:darkgreen;" class="fas fa-cloud-download-alt"> Download</i>
                           </a>
 

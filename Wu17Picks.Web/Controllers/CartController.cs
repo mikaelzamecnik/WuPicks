@@ -5,6 +5,8 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Zip;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
@@ -20,12 +22,11 @@ namespace Wu17Picks.Web.Controllers
         // TODO Refactor this entire controller
 
         private readonly IImage _imageService;
-        private readonly string _basePath;
-
-        public CartController(IImage imageService)
+        private readonly IHostingEnvironment _hostingEnvironment;
+        public CartController(IImage imageService, IHostingEnvironment environment)
         {
             _imageService = imageService;
-            _basePath = "https://wustore.blob.core.windows.net/images/";
+            _hostingEnvironment = environment;
         }
 
         public IActionResult Index()
@@ -42,7 +43,7 @@ namespace Wu17Picks.Web.Controllers
             {
                 var cart = new List<Item>
                 {
-                    new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1 }
+                    new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1, IsSelected = true }
                 };
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
@@ -52,7 +53,7 @@ namespace Wu17Picks.Web.Controllers
                 int index = Exists(cart, id);
                 if(index == -1)
                 {
-                    cart.Add(new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1 });
+                    cart.Add(new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1, IsSelected = true });
                 }
                 else
                 {
@@ -65,7 +66,6 @@ namespace Wu17Picks.Web.Controllers
 
         public IActionResult Remove(int id)
         {
-            //test CI
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             int index = Exists(cart, id);
             if(id > 0)
@@ -79,39 +79,8 @@ namespace Wu17Picks.Web.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return RedirectToAction("Index");
         }
-        // TODO download single file från cloud storage 
-        public IActionResult SingleDownload()
-        {
-            return Ok("Nope");
-        }
-        // TODO download as zip
-        public IActionResult DownloadAsZip()
-            {
-                var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+        // TODO download as Zip
 
-            if (cart == null || cart.Count == 0)
-            {
-                return BadRequest();
-            } else
-
-            {
-
-                // Get images from Url in current session ???
-                var images = _imageService.GetAll();
-                byte[] bytes;
-
-                using (var ms = new MemoryStream())
-                {
-                    using (var imagezip = new ZipArchive(ms, ZipArchiveMode.Create, true))
-                        foreach (var image in images)
-                            ms.CanRead.Equals(cart);
-
-                            ms.Position = 0;
-                    bytes = ms.ToArray();
-                }
-                return File(bytes, "application/zip", "images.zip");
-            } 
-            }
         private int Exists(List<Item> cart, int id)
         {
             for(int i = 0; i< cart.Count; i++)
