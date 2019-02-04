@@ -3,22 +3,34 @@
     color: hotpink;
     font-size: 36px;
 }
+
 .gallery-content {
     padding: 24px;
 }
+
 .gallery-image {
-    background-size:cover;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 280px;
     width: 280px;
 }
+
+.dropdown-menu > .active > a {
+    background-color:rebeccapurple;
+}
+.dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    background-color: rebeccapurple;
+}
+
 .navbar {
-    background-color:rebeccapurple!important;
+    background-color: rebeccapurple !important;
 }
+
 .menu-text {
-    color:white;
+    color: white;
 }
+
 .gallery-image-container {
     padding: 8px;
     background: #fff;
@@ -31,16 +43,20 @@
     text-align: center;
     color: black;
 }
+
 .image-detail-container {
     text-align: left;
 }
+
 .image-detail {
     padding: 12px;
     border-radius: 2px;
 }
+
 .image-detail-meta {
     padding: 12px;
 }
+
 .text-image {
     position: absolute;
     bottom: 18px;
@@ -52,20 +68,25 @@
     padding-left: 2px;
     padding-right: 2px;
 }
+
 .submit {
     padding: 2%;
 }
+
 .btn-file {
-    margin:6px;
+    margin: 6px;
 }
+
 #upload-form {
     padding: 60px;
     margin: auto;
     width: 50%;
 }
+
 .upload-container {
     padding: 2%;
 }
+
 .drop-shadow {
     box-shadow: 0 10px 18px rgba(0,0,0,0.2), 0 5px 5px rgba(0,0,0,0.2);
 }
@@ -75,6 +96,7 @@ body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
+
 .body-content {
     padding-left: 15px;
     padding-right: 15px;

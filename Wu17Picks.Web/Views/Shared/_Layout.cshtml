@@ -40,21 +40,22 @@
                 <li>
                     <a asp-controller="Category" asp-action="Index" class="menu-text">Add Category</a>
                 </li>
-                <li>
-                    <a asp-controller="Cart" asp-action="Index" class="menu-text">Show Cart</a>
-                </li>
-                <li class="dropdown">
-                        <a class="dropdown-toggle menu-text" data-toggle="dropdown" href="#">
-                            Filter Category
-                            <span class="caret"></span>
-                        </a>
+                <li class="dropdown" style="background-color:hotpink;">
+                    <a class="dropdown-toggle menu-text" data-toggle="dropdown" href="#">
+                        Filter Category
+                        <span class="caret"></span>
+                    </a>
                     <ul class="dropdown-menu">
                         @await Component.InvokeAsync("Category")
 
                     </ul>
                 </li>
             </ul>
-            
+            <ul class="nav navbar-nav ml-auto" style="float:right;">
+                <li>
+                    <a asp-controller="Cart" asp-action="Index" class="menu-text"><i class="fas fa-shopping-cart"></i> Show Cart</a>
+                </li>
+            </ul>
         </div>
     </nav>
     <div class="container body-content">

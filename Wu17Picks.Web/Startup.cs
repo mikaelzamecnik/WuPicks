@@ -45,7 +45,7 @@ namespace Wu17Picks.Web
             }
             else
             {
-                app.UseExceptionHandler("/Shared/Error");
+                app.UseExceptionHandler("/Gallery/Error");
             }
 
             app.UseSession();
