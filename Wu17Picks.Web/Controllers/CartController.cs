@@ -70,7 +70,12 @@ namespace Wu17Picks.Web.Controllers
             return RedirectToAction("Index");
         }
         // TODO download as Zip
-
+        public IActionResult DownloadFromZip()
+        {
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            
+            return Json(cart);
+        }
         private int Exists(List<Item> cart, int id)
         {
             for(int i = 0; i< cart.Count; i++)

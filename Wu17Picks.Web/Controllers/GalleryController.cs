@@ -28,7 +28,7 @@ namespace Wu17Picks.Web.Controllers
             var imageList = _imageService.GalleryImages
                 .Where(p => selectedCategory == null || 
                 p.Category.Name.Equals(selectedCategory, StringComparison.InvariantCultureIgnoreCase))
-                .OrderBy(i=> i.Created);
+                .OrderByDescending(i=> i.Created);
             var model = new GalleryIndexModel()
             {
                 Images = imageList,

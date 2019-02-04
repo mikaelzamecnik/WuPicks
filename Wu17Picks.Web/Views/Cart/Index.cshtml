@@ -3,18 +3,18 @@
         <div class="image-detail">
             @foreach (var item in ViewBag.cart)
             {
-            <div>
-                <img src="@item.GalleryImage.Url" style="width:10%;height:10%;border-radius:10px;" /><br /><br />
-                <a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.GalleryImage.Id">
-                    <i style="font-size: 14px;color:darkred" class="fas fa-trash-alt"> Delete</i>
-                </a><br /><br />
-                          <a href="@item.GalleryImage.Url">
-                              <i style="font-size: 14px;color:darkgreen;" class="fas fa-cloud-download-alt"> Download</i>
-                          </a>
+                <div>
+                    <img src="@item.GalleryImage.Url" style="width:10%;height:10%;border-radius:10px;" /><br /><br />
+                    <a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.GalleryImage.Id">
+                        <i style="font-size: 14px;color:darkred" class="fas fa-trash-alt"> Delete</i>
+                    </a><br /><br />
+                    <a href="@item.GalleryImage.Url">
+                        <i style="font-size: 14px;color:darkgreen;" class="fas fa-cloud-download-alt"> Download</i>
+                    </a>
 
 
-                <hr />
-            </div>
+                    <hr />
+                </div>
             }
             <div class="row">Total Ammount: <strong>@ViewBag.total</strong></div><br />
             <div class="row">
@@ -27,6 +27,9 @@
                         Compress Cart and Download Zip
                     </a>
                 }
+                <a class="btn btn-warning" asp-controller="Cart" asp-action="DownloadFromZip">
+                    GetJson
+                </a>
                 <div style="float:right;">
                     <a class="btn btn-danger" asp-controller="Cart" asp-action="Remove">
                         Empty Cart
