@@ -10,6 +10,5 @@ namespace Wu17Picks.Data.Entities
         public GalleryImage GalleryImage { get; set; }
         public int Quantity { get; set; }
 
-        public bool IsSelected { get; set; }
     }
 }

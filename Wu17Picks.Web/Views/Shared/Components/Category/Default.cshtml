@@ -20,12 +20,18 @@
 </ul>*@
 
 
-
-<label>Select Category</label>
-<select class="form-control">
-    <option value="@(ViewBag.SelectedCategory == null ? "active" : "")" selected>-- All --</option>
-    @foreach (var cat in Model)
-    {
-        <option value="@(cat == ViewBag.SelectedCategory ? "active": "")">@cat</option>
-    }
-</select>
+<form asp-controller="Gallery" asp-action="Index" asp-route-selectedCategory="" method="post">
+    <div class="form-group">
+        <label>Select Category</label>
+        <select class="form-control">
+            <option value="@(ViewBag.SelectedCategory == null ? "active" : "" )" selected>-- All --</option>
+            @foreach (var cat in Model)
+            {
+                <option value="@(cat.Equals(ViewBag.SelectedCategory,
+                       StringComparison.InvariantCultureIgnoreCase) ? "active": "")">
+                    @cat
+                </option>
+            }
+        </select>
+        </div>
+</form>

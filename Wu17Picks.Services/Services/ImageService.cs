@@ -19,6 +19,8 @@ namespace Wu17Picks.Services
         {
             _ctx = ctx;
         }
+
+        public IEnumerable<Category> Categories => _ctx.Categories;
         public IEnumerable<GalleryImage> GetAll()
         {
             return _ctx.GalleryImages

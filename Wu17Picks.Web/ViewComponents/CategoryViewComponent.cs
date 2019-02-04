@@ -19,7 +19,7 @@ namespace Wu17Picks.Web.ViewComponents
         public IViewComponentResult Invoke()
         {
             ViewBag.SelectedCategory = RouteData?.Values["SelectedCategory"];
-            var categories = _imageService.GetAll().Select(x => x.Category.Name).OrderBy(c => c);
+            var categories = _imageService.Categories.Select(x => x.Name).OrderBy(c => c);
             return View(categories);
         }
 

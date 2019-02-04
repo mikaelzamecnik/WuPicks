@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Wu17Picks.Data.Entities;
 using Wu17Picks.Data.Models;
 
 namespace Wu17Picks.Services.Interfaces
@@ -10,6 +11,7 @@ namespace Wu17Picks.Services.Interfaces
     {
         IEnumerable<GalleryImage> GetAll();
         IEnumerable<GalleryImage> GetWithTags(string tag);
+        IEnumerable<Category> Categories { get; }
         GalleryImage GetById(int id);
         CloudBlobContainer GetBlobContainer(string connectionString, string containerName);
         Task SetImage(string title, string tags, int categoryid, Uri uri);

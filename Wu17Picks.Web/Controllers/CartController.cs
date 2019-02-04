@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
 using Wu17Picks.Data.Entities;
 using Wu17Picks.Services.Helpers;
 using Wu17Picks.Services.Interfaces;
-using Wu17Picks.Web.Models;
 
 namespace Wu17Picks.Web.Controllers
 {
@@ -22,11 +14,9 @@ namespace Wu17Picks.Web.Controllers
         // TODO Refactor this entire controller
 
         private readonly IImage _imageService;
-        private readonly IHostingEnvironment _hostingEnvironment;
-        public CartController(IImage imageService, IHostingEnvironment environment)
+        public CartController(IImage imageService)
         {
             _imageService = imageService;
-            _hostingEnvironment = environment;
         }
 
         public IActionResult Index()
@@ -43,7 +33,7 @@ namespace Wu17Picks.Web.Controllers
             {
                 var cart = new List<Item>
                 {
-                    new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1, IsSelected = true }
+                    new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1 }
                 };
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
@@ -53,7 +43,7 @@ namespace Wu17Picks.Web.Controllers
                 int index = Exists(cart, id);
                 if(index == -1)
                 {
-                    cart.Add(new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1, IsSelected = true });
+                    cart.Add(new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1 });
                 }
                 else
                 {
