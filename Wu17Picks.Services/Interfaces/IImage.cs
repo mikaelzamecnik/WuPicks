@@ -12,6 +12,7 @@ namespace Wu17Picks.Services.Interfaces
         IEnumerable<GalleryImage> GetAll();
         IEnumerable<GalleryImage> GetWithTags(string tag);
         IEnumerable<Category> Categories { get; }
+        IEnumerable<GalleryImage> GalleryImages { get; }
         GalleryImage GetById(int id);
         CloudBlobContainer GetBlobContainer(string connectionString, string containerName);
         Task SetImage(string title, string tags, int categoryid, Uri uri);

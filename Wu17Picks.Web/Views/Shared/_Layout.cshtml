@@ -43,12 +43,23 @@
                 <li>
                     <a asp-controller="Cart" asp-action="Index" class="menu-text">Show Cart</a>
                 </li>
+                <li class="dropdown">
+                        <a class="dropdown-toggle menu-text" data-toggle="dropdown" href="#">
+                            Filter Category
+                            <span class="caret"></span>
+                        </a>
+                    <ul class="dropdown-menu">
+                        @await Component.InvokeAsync("Category")
+
+                    </ul>
+                </li>
             </ul>
+            
         </div>
     </nav>
     <div class="container body-content">
         <div class="row gallery-content">
-        @await Component.InvokeAsync("Category")
+        
         </div>
         @RenderBody()
         <hr />

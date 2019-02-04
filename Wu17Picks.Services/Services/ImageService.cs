@@ -21,6 +21,7 @@ namespace Wu17Picks.Services
         }
 
         public IEnumerable<Category> Categories => _ctx.Categories;
+        public IEnumerable<GalleryImage> GalleryImages => _ctx.GalleryImages.Include(c => c.Category);
         public IEnumerable<GalleryImage> GetAll()
         {
             return _ctx.GalleryImages

@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<string>
 
-@*<ul class="nav nav-pills nav-stacked">
     <li class="@(ViewBag.SelectedCategory == null ? "active" : "")">
         <a asp-action="Index"
            asp-controller="Gallery"
            asp-route-selectedCategory="">
-            Alla Produkter
+            Show All Categories
         </a>
     </li>
     @foreach (var cat in Model)
@@ -14,16 +13,15 @@
             <a asp-controller="Gallery"
                asp-action="Index"
                asp-route-selectedCategory="@cat"
-               asp-route-page="1">@cat</a>
+               >@cat</a>
         </li>
     }
-</ul>*@
 
 
-<form asp-controller="Gallery" asp-action="Index" asp-route-selectedCategory="" method="post">
+@*<form asp-controller="Gallery" asp-action="Index" asp-route-selectedCategory="active" method="post">
     <div class="form-group">
         <label>Select Category</label>
-        <select class="form-control">
+        <select onchange="form.submit()" class="form-control">
             <option value="@(ViewBag.SelectedCategory == null ? "active" : "" )" selected>-- All --</option>
             @foreach (var cat in Model)
             {
@@ -34,4 +32,4 @@
             }
         </select>
         </div>
-</form>
+</form>*@

@@ -17,8 +17,15 @@ namespace Wu17Picks.Web.Controllers
         }
         public IActionResult Index(string selectedCategory)
         {
-            var cat = _categoryService.GetAll();
-            var imageList = _imageService.GetAll()
+            int categoryId = 0;
+            if (!string.IsNullOrEmpty(selectedCategory))
+            {
+                var cat = _imageService.Categories.FirstOrDefault(c => c.Name.Equals(selectedCategory, StringComparison.InvariantCultureIgnoreCase));
+                if (cat != null) categoryId = cat.Id;
+            }
+
+            var categorytext = _categoryService.GetAll();
+            var imageList = _imageService.GalleryImages
                 .Where(p => selectedCategory == null || 
                 p.Category.Name.Equals(selectedCategory, StringComparison.InvariantCultureIgnoreCase))
                 .OrderBy(i=> i.Created);
@@ -26,7 +33,7 @@ namespace Wu17Picks.Web.Controllers
             {
                 Images = imageList,
                 SearchQuery = "",
-                Categories = cat,
+                Categories = categorytext,
                 SelectedCategory = selectedCategory
             };
 
