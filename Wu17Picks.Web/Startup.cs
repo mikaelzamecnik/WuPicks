@@ -27,6 +27,13 @@ namespace Wu17Picks.Web
             services.AddScoped<IImage, ImageService>();
             services.AddScoped<ICategory, CategoryService>();
             services.AddMemoryCache();
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetConnectionString("Redis");
+                options.InstanceName = ".Picks.RedisCache";
+            });
+
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".Picks.Cart.Session";

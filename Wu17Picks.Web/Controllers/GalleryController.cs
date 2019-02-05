@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Wu17Picks.Infrastructure.Helpers;
+using Wu17Picks.Services.Helpers;
 using Wu17Picks.Services.Interfaces;
 using Wu17Picks.Web.Models;
 
@@ -11,11 +17,40 @@ namespace Wu17Picks.Web.Controllers
     {
         private readonly IImage _imageService;
         private readonly ICategory _categoryService;
-        public GalleryController(IImage imageService, ICategory categoryService)
+        private readonly IDistributedCache _cache;
+        public GalleryController(IImage imageService, ICategory categoryService, IDistributedCache cache)
         {
             _categoryService = categoryService;
             _imageService = imageService;
+            _cache = cache;
         }
+        
+        // Test Redis method
+        //public async Task<IActionResult> Redis(string name)
+        //{
+        //    var value = await _cache.GetValueAsync<string>("the_cache_key");
+
+        //    if (value == null)
+        //    {
+        //        value = $"{DateTime.Now.ToString(CultureInfo.CurrentCulture)}";
+        //        await _cache.SetValueAsync("the_cache_key", value);
+        //    }
+
+        //    ViewData["CacheTime"] = $"Cached time: {value}";
+        //    ViewData["CurrentTime"] = $"Current time: {DateTime.Now.ToString(CultureInfo.CurrentCulture)}";
+
+        //    var thenameFromSession = HttpContext.Session.GetObjectFromJson<string>("name");
+        //    if (string.IsNullOrEmpty(thenameFromSession))
+        //    {
+        //        HttpContext.Session.SetObjectAsJson("name", name);
+        //        thenameFromSession = name;
+        //    }
+        //    ViewData["TheName"] = $"The name from session:{thenameFromSession}";
+
+        //    return View();
+        //}
+
+
         public IActionResult Index(string selectedCategory)
         {
             int categoryId = 0;
