@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Wu17Picks.Services.Interfaces;
+using Wu17Picks.Infrastructure.Interfaces;
 
 namespace Wu17Picks.Web.ViewComponents
 {

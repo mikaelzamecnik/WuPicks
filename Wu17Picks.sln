@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wu17Picks.Web", "Wu17Picks.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wu17Picks.Data", "Wu17Picks.Data\Wu17Picks.Data.csproj", "{2B6E6423-F2D6-4313-B2EC-763D34750D82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wu17Picks.Infrastructure", "Wu17Picks.Services\Wu17Picks.Infrastructure.csproj", "{D89C988F-E60B-457E-BF57-7FF24F0F397C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wu17Picks.Infrastructure", "Wu17Picks.Infrastructure\Wu17Picks.Infrastructure.csproj", "{D89C988F-E60B-457E-BF57-7FF24F0F397C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

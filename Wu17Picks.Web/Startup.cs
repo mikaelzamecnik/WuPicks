@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Wu17Picks.Data;
-using Wu17Picks.Services.Interfaces;
+using Wu17Picks.Infrastructure.Interfaces;
+using Wu17Picks.Infrastructure.Services;
 using Wu17Picks.Services;
 
 namespace Wu17Picks.Web
@@ -24,15 +25,14 @@ namespace Wu17Picks.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IImage, ImageService>();
-            services.AddScoped<ICategory, CategoryService>();
-            services.AddMemoryCache();
+            services.AddTransient<IImage, ImageService>();
+            services.AddTransient<ICategory, CategoryService>();
 
-            services.AddDistributedRedisCache(options =>
-            {
-                options.Configuration = Configuration.GetConnectionString("Redis");
-                options.InstanceName = ".Picks.RedisCache";
-            });
+            //services.AddDistributedRedisCache(options =>
+            //{
+            //    options.Configuration = Configuration.GetConnectionString("Redis");
+            //    options.InstanceName = ".Picks.RedisCache";
+            //});
 
             services.AddSession(options =>
             {

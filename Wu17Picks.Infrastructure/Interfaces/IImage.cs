@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Wu17Picks.Data.Entities;
 using Wu17Picks.Data.Models;
 
-namespace Wu17Picks.Services.Interfaces
+namespace Wu17Picks.Infrastructure.Interfaces
 {
     public interface IImage
     {

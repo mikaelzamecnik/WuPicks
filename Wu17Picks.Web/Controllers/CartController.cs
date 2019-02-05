@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Wu17Picks.Data.Entities;
-using Wu17Picks.Services.Helpers;
-using Wu17Picks.Services.Interfaces;
+using Wu17Picks.Infrastructure.Extensions;
+using Wu17Picks.Infrastructure.Interfaces;
 
 namespace Wu17Picks.Web.Controllers
 {
@@ -18,16 +16,14 @@ namespace Wu17Picks.Web.Controllers
         // TODO Refactor this entire controller
 
         private readonly IImage _imageService;
-        private readonly IHostingEnvironment _hostingEnvironment;
-        public CartController(IImage imageService, IHostingEnvironment hostingEnvironment)
+        public CartController(IImage imageService)
         {
             _imageService = imageService;
-            _hostingEnvironment = hostingEnvironment;
         }
 
         public IActionResult Index()
         {
-            var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            var cart = SessionHelper.Get<List<Item>>(HttpContext.Session, "cart");
             ViewBag.cart = cart;
             ViewBag.total = cart.Sum(item => item.Quantity);
             return View();
@@ -35,19 +31,19 @@ namespace Wu17Picks.Web.Controllers
         [Route("add/{id}")]
         public IActionResult AddImage(int id)
         {
-            if(SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
+            if (SessionHelper.Get<List<Item>>(HttpContext.Session, "cart") == null)
             {
                 var cart = new List<Item>
                 {
-                    new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1, IsSelected = true }
+                    new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1 }
                 };
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                SessionHelper.Set(HttpContext.Session, "cart", cart);
             }
             else
             {
-                var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+                var cart = SessionHelper.Get<List<Item>>(HttpContext.Session, "cart");
                 int index = Exists(cart, id);
-                if(index == -1)
+                if (index == -1)
                 {
                     cart.Add(new Item() { GalleryImage = _imageService.GetById(id), Quantity = 1 });
                 }
@@ -55,16 +51,16 @@ namespace Wu17Picks.Web.Controllers
                 {
                     cart[index].Quantity++;
                 }
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                SessionHelper.Set(HttpContext.Session, "cart", cart);
             }
             return RedirectToAction("Index");
         }
 
         public IActionResult Remove(int id)
         {
-            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            List<Item> cart = SessionHelper.Get<List<Item>>(HttpContext.Session, "cart");
             int index = Exists(cart, id);
-            if(id > 0)
+            if (id > 0)
             {
                 cart.RemoveAt(index);
             }
@@ -72,38 +68,37 @@ namespace Wu17Picks.Web.Controllers
             {
                 cart.Clear();
             }
-            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            SessionHelper.Set(HttpContext.Session, "cart", cart);
             return RedirectToAction("Index");
         }
+
         // TODO download as Zip
 
         public IActionResult DownloadAsZip()
         {
-            var sessionList = HttpContext.Session.GetObjectFromJson<List<Item>>("cart");
-            // Howto loop trough current Urls in localstorage
+            var cart = HttpContext.Session.Get<List<Item>>("cart");
+            if (cart == null || cart.Count == 0)
+                return BadRequest();
 
-            Guid guidName = Guid.NewGuid();
-            string returnName = guidName.ToString() + ".zip";
-            string rootPath = _hostingEnvironment.WebRootPath + "Azure" ;
-            string zipPath = _hostingEnvironment.WebRootPath + "/zip/";
-
-            var zip = ZipFile.Open(zipPath + returnName, ZipArchiveMode.Create);
-            foreach (var file in sessionList)
+            byte[] bytes;
+            DateTime fileName = DateTime.Now;
+            using (var ms = new MemoryStream())
             {
-                zip.CreateEntryFromFile(rootPath +file, Path.GetFileName(rootPath + file), CompressionLevel.Optimal);
+                using (var imageCompression = new ZipArchive(ms, ZipArchiveMode.Create, true))
+                    foreach (var image in cart)
+                        // Something with the path
+                        imageCompression.CreateEntry(image.GalleryImage.Url, CompressionLevel.Fastest);
+                ms.Position = 0;
+                bytes = ms.ToArray();
             }
 
-            zip.Dispose();
-
-            var zipReturn = @"~/zip/" + returnName;
-
-            return File(zipReturn, System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName(zipReturn));
+            return File(bytes, "application/zip", $"{fileName}.zip");
         }
         private int Exists(List<Item> cart, int id)
         {
-            for(int i = 0; i< cart.Count; i++)
+            for (int i = 0; i < cart.Count; i++)
             {
-                if(cart[i].GalleryImage.Id == id)
+                if (cart[i].GalleryImage.Id == id)
                 {
                     return i;
                 }

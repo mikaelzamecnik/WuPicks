@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wu17Picks.Data\Wu17Picks.Data.csproj" />
-    <ProjectReference Include="..\Wu17Picks.Services\Wu17Picks.Infrastructure.csproj" />
+    <ProjectReference Include="..\Wu17Picks.Infrastructure\Wu17Picks.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

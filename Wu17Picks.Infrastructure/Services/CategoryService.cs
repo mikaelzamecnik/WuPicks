@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Wu17Picks.Data;
 using Wu17Picks.Data.Entities;
-using Wu17Picks.Services.Interfaces;
+using Wu17Picks.Infrastructure.Interfaces;
 
-namespace Wu17Picks.Services
+namespace Wu17Picks.Infrastructure.Services
 {
     public class CategoryService : ICategory
     {

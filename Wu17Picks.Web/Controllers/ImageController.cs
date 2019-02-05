@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Headers;
-using Wu17Picks.Services.Interfaces;
+using Wu17Picks.Infrastructure.Interfaces;
 using Wu17Picks.Web.Models;
 
 namespace Wu17Picks.Web.Controllers

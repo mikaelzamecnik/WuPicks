@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wu17Picks.Infrastructure.Helpers
+namespace Wu17Picks.Infrastructure.Extensions
 {
     public static class CacheHelper
     {

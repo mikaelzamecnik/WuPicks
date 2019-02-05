@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Wu17Picks.Data.Entities;
 
-namespace Wu17Picks.Services.Interfaces
+namespace Wu17Picks.Infrastructure.Interfaces
 {
     public interface ICategory
     {
