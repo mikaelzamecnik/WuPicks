@@ -84,7 +84,6 @@ namespace Wu17Picks.Web.Controllers
             var cart = HttpContext.Session.Get<List<Item>>("cart");
             if (cart == null || cart.Count == 0)
                 return BadRequest();
-
             byte[] bytes;
             DateTime fileName = DateTime.Now;
             using (var ms = new MemoryStream())

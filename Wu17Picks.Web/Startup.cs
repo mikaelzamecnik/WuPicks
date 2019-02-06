@@ -37,7 +37,7 @@ namespace Wu17Picks.Web
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".Picks.Cart.Session";
-                options.IdleTimeout = TimeSpan.FromHours(3);
+                options.IdleTimeout = TimeSpan.FromDays(7);
             });
             services.AddMvc();
         }
