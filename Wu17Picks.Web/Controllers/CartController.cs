@@ -25,8 +25,13 @@ namespace Wu17Picks.Web.Controllers
         {
             var cart = SessionHelper.Get<List<Item>>(HttpContext.Session, "cart");
             ViewBag.cart = cart;
-            ViewBag.total = cart.Sum(item => item.Quantity);
-            return View();
+            if (cart != null)
+            {
+                ViewBag.total = cart.Sum(item => item.Quantity);
+                return View();
+            }
+            ViewBag.total = 0;
+            return RedirectToAction("Index", "Gallery");
         }
         [Route("add/{id}")]
         public IActionResult AddImage(int id)

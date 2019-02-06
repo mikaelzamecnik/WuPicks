@@ -47,13 +47,12 @@
                     </a>
                     <ul class="dropdown-menu">
                         @await Component.InvokeAsync("Category")
-
                     </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav ml-auto" style="float:right;">
                 <li>
-                    <a asp-controller="Cart" asp-action="Index" class="menu-text"><i class="fas fa-shopping-cart"></i> Show Cart</a>
+                    <a asp-controller="Cart" asp-action="Index" class="menu-text"><i class="fas fa-shopping-cart"></i> Show Cart  @ViewBag.total</a>
                 </li>
             </ul>
         </div>
