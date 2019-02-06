@@ -92,7 +92,7 @@ namespace Wu17Picks.Web.Controllers
                 using (var imageCompression = new ZipArchive(ms, ZipArchiveMode.Create, true))
                     foreach (var image in cart)
                         // Something with the path
-                        imageCompression.CreateEntry(image.GalleryImage.Url, CompressionLevel.Fastest);
+                        imageCompression.CreateEntry(image.GalleryImage.Url.ToString(), CompressionLevel.Fastest);
                 ms.Position = 0;
                 bytes = ms.ToArray();
             }

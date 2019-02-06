@@ -22,8 +22,4 @@
     <ProjectReference Include="..\Wu17Picks.Infrastructure\Wu17Picks.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\zip\" />
-  </ItemGroup>
-
 </Project>

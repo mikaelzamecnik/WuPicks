@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Wu17Picks.Infrastructure.Extensions;
 using Wu17Picks.Infrastructure.Interfaces;
 using Wu17Picks.Web.Models;
 
@@ -20,31 +23,31 @@ namespace Wu17Picks.Web.Controllers
             _imageService = imageService;
             _cache = cache;
         }
-        
+
         // Test Redis method
-        //public async Task<IActionResult> Redis(string name)
-        //{
-        //    var value = await _cache.GetValueAsync<string>("the_cache_key");
+        public async Task<IActionResult> Redis(string name)
+        {
+            var value = await _cache.GetValueAsync<string>("the_cache_key");
 
-        //    if (value == null)
-        //    {
-        //        value = $"{DateTime.Now.ToString(CultureInfo.CurrentCulture)}";
-        //        await _cache.SetValueAsync("the_cache_key", value);
-        //    }
+            if (value == null)
+            {
+                value = $"{DateTime.Now.ToString(CultureInfo.CurrentCulture)}";
+                await _cache.SetValueAsync("the_cache_key", value);
+            }
 
-        //    ViewData["CacheTime"] = $"Cached time: {value}";
-        //    ViewData["CurrentTime"] = $"Current time: {DateTime.Now.ToString(CultureInfo.CurrentCulture)}";
+            ViewData["CacheTime"] = $"Cached time: {value}";
+            ViewData["CurrentTime"] = $"Current time: {DateTime.Now.ToString(CultureInfo.CurrentCulture)}";
 
-        //    var thenameFromSession = HttpContext.Session.GetObjectFromJson<string>("name");
-        //    if (string.IsNullOrEmpty(thenameFromSession))
-        //    {
-        //        HttpContext.Session.SetObjectAsJson("name", name);
-        //        thenameFromSession = name;
-        //    }
-        //    ViewData["TheName"] = $"The name from session:{thenameFromSession}";
+            var thenameFromSession = HttpContext.Session.Get<string>("name");
+            if (string.IsNullOrEmpty(thenameFromSession))
+            {
+                HttpContext.Session.Set("name", name);
+                thenameFromSession = name;
+            }
+            ViewData["TheName"] = $"The name from session:{thenameFromSession}";
 
-        //    return View();
-        //}
+            return View();
+        }
 
 
         public IActionResult Index(string selectedCategory)
@@ -58,7 +61,7 @@ namespace Wu17Picks.Web.Controllers
 
             var categorytext = _categoryService.GetAll();
             var imageList = _imageService.GalleryImages
-                .Where(p => selectedCategory == null || 
+                .Where(p => selectedCategory == null ||
                 p.Category.Name.Equals(selectedCategory, StringComparison.InvariantCultureIgnoreCase))
                 .OrderByDescending(i=> i.Created);
             var model = new GalleryIndexModel()

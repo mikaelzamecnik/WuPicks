@@ -28,11 +28,11 @@ namespace Wu17Picks.Web
             services.AddTransient<IImage, ImageService>();
             services.AddTransient<ICategory, CategoryService>();
 
-            //services.AddDistributedRedisCache(options =>
-            //{
-            //    options.Configuration = Configuration.GetConnectionString("Redis");
-            //    options.InstanceName = ".Picks.RedisCache";
-            //});
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetConnectionString("Redis");
+                options.InstanceName = ".Picks.RedisCache";
+            });
 
             services.AddSession(options =>
             {
