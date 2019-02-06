@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Wu17Picks.Data.Entities;
@@ -16,9 +18,11 @@ namespace Wu17Picks.Web.Controllers
         // TODO Refactor this entire controller
 
         private readonly IImage _imageService;
-        public CartController(IImage imageService)
+        private readonly IHostingEnvironment _hostingEnvironment;
+        public CartController(IImage imageService, IHostingEnvironment hostingEnvironment)
         {
             _imageService = imageService;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public IActionResult Index()
@@ -81,8 +85,10 @@ namespace Wu17Picks.Web.Controllers
 
         public IActionResult DownloadAsZip()
         {
-            var cart = HttpContext.Session.Get<List<Item>>("cart");
-            if (cart == null || cart.Count == 0)
+            var cart = HttpContext.Session.Get<List<Item>>("cart")
+                .ConvertAll(item => item.GalleryImage.Url);
+
+            if (cart == null)
                 return BadRequest();
             byte[] bytes;
             DateTime fileName = DateTime.Now;
@@ -91,7 +97,7 @@ namespace Wu17Picks.Web.Controllers
                 using (var imageCompression = new ZipArchive(ms, ZipArchiveMode.Create, true))
                     foreach (var image in cart)
                         // Something with the path
-                        imageCompression.CreateEntry(image.GalleryImage.Url.ToString(), CompressionLevel.Fastest);
+                        imageCompression.CreateEntry(image, CompressionLevel.Fastest);
                 ms.Position = 0;
                 bytes = ms.ToArray();
             }
