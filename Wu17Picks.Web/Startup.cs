@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Wu17Picks.Data;
+using Wu17Picks.Infrastructure.Extensions;
 using Wu17Picks.Infrastructure.Interfaces;
 using Wu17Picks.Infrastructure.Services;
 using Wu17Picks.Services;
@@ -27,6 +28,8 @@ namespace Wu17Picks.Web
 
             services.AddTransient<IImage, ImageService>();
             services.AddTransient<ICategory, CategoryService>();
+
+            services.Configure<AppSettingsHelper>(Configuration.GetSection("AzureSettings"));
 
             services.AddDistributedRedisCache(options =>
             {

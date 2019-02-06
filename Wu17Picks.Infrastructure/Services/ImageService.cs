@@ -9,15 +9,19 @@ using Wu17Picks.Data;
 using Wu17Picks.Data.Models;
 using Wu17Picks.Data.Entities;
 using Wu17Picks.Infrastructure.Interfaces;
+using Wu17Picks.Infrastructure.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Wu17Picks.Services
 {
     public class ImageService : IImage
     {
+        private readonly AppSettingsHelper _appSettings;
         private readonly ApplicationDbContext _ctx;
-        public ImageService(ApplicationDbContext ctx)
+        public ImageService(ApplicationDbContext ctx, IOptions<AppSettingsHelper> settings)
         {
             _ctx = ctx;
+            _appSettings = settings.Value;
         }
 
         public IEnumerable<Category> Categories => _ctx.Categories;
@@ -40,9 +44,9 @@ namespace Wu17Picks.Services
                 .Any(t => t.Description == tag));
         }
 
-        public CloudBlobContainer GetBlobContainer(string azureConnectionString, string containerName)
+        public CloudBlobContainer GetBlobContainer(string containerName)
         {
-            var storageAccount = CloudStorageAccount.Parse(azureConnectionString);
+            var storageAccount = CloudStorageAccount.Parse(_appSettings.AzureStorageConnectionString);
             var blobClient = storageAccount.CreateCloudBlobClient();
             return blobClient.GetContainerReference(containerName);
         }

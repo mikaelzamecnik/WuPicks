@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
+using Wu17Picks.Infrastructure.Extensions;
 using Wu17Picks.Infrastructure.Interfaces;
 using Wu17Picks.Web.Models;
 
@@ -14,7 +16,6 @@ namespace Wu17Picks.Web.Controllers
 {
     public class ImageController : Controller
     {
-        private readonly IConfiguration _config;
         private readonly IDistributedCache _cache;
         private readonly IImage _imageService;
         private readonly ICategory _categoryService;
@@ -22,13 +23,11 @@ namespace Wu17Picks.Web.Controllers
 
         private string AzureConnectionString { get; }
 
-        public ImageController(IConfiguration config, IImage imageService, ICategory categoryService, IDistributedCache cache)
+        public ImageController(IImage imageService, ICategory categoryService, IDistributedCache cache)
         {
             _imageService = imageService;
             _categoryService = categoryService;
-            _config = config;
             _cache = cache;
-            AzureConnectionString = _config["AzureStorageConnectionString"];
         }
 
         public IActionResult Upload()
@@ -49,7 +48,7 @@ namespace Wu17Picks.Web.Controllers
                 throw new NotSupportedException("Only jpeg and png are supported");
             }
 
-            var container = _imageService.GetBlobContainer(AzureConnectionString, "images");
+            var container = _imageService.GetBlobContainer("images");
 
             var content = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
