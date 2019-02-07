@@ -89,10 +89,13 @@ namespace Wu17Picks.Web.Controllers
             var cart = HttpContext.Session.Get<List<Item>>("cart")
                 .ConvertAll(item => item.GalleryImage.Url);
 
+            cart[0].Split("");
+
             if (cart == null)
                 return BadRequest();
             byte[] bytes;
             DateTime fileName = DateTime.Now;
+
             using (var ms = new MemoryStream())
             {
                 using (var imageCompression = new ZipArchive(ms, ZipArchiveMode.Create, true))
