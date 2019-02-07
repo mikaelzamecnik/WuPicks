@@ -16,40 +16,11 @@ namespace Wu17Picks.Web.Controllers
     {
         private readonly IImage _imageService;
         private readonly ICategory _categoryService;
-        private readonly IDistributedCache _cache;
-        public GalleryController(IImage imageService, ICategory categoryService, IDistributedCache cache)
+        public GalleryController(IImage imageService, ICategory categoryService)
         {
             _categoryService = categoryService;
             _imageService = imageService;
-            _cache = cache;
         }
-
-        // Test Redis method
-        public async Task<IActionResult> Redis(string name)
-        {
-            var value = await _cache.GetValueAsync<string>("the_cache_key");
-
-            if (value == null)
-            {
-                value = $"{DateTime.Now.ToString(CultureInfo.CurrentCulture)}";
-                await _cache.SetValueAsync("the_cache_key", value);
-            }
-
-            ViewData["CacheTime"] = $"Cached time: {value}";
-            ViewData["CurrentTime"] = $"Current time: {DateTime.Now.ToString(CultureInfo.CurrentCulture)}";
-
-            var thenameFromSession = HttpContext.Session.Get<string>("name");
-            if (string.IsNullOrEmpty(thenameFromSession))
-            {
-                HttpContext.Session.Set("name", name);
-                thenameFromSession = name;
-            }
-            ViewData["TheName"] = $"The name from session:{thenameFromSession}";
-
-            return View();
-        }
-
-
         public IActionResult Index(string selectedCategory)
         {
             int categoryId = 0;

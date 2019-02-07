@@ -9,15 +9,15 @@ namespace Wu17Picks.Infrastructure.Extensions
 {
     public static class CacheHelper
     {
-        public static async Task<bool> SetValueAsync<T>(this IDistributedCache cache, string key, T value)
+        public static bool SetValue<T>(this IDistributedCache cache, string key, T value)
         {
-            await cache.SetStringAsync(key, JsonConvert.SerializeObject(value));
+            cache.SetString(key, JsonConvert.SerializeObject(value));
             return true;
         }
 
-        public static async Task<T> GetValueAsync<T>(this IDistributedCache cache, string key)
+        public static T GetValue<T>(this IDistributedCache cache, string key)
         {
-            var value = await cache.GetStringAsync(key);
+            var value = cache.GetString(key);
             return value == null ? default(T) : JsonConvert.DeserializeObject<T>(value);
         }
     }
