@@ -14,5 +14,6 @@ namespace Wu17Picks.Web.Models
         public int CategoryId { get; set; }
         public string SelectedCategory { get; set; }
         public string SearchQuery { get; set; }
+        public string TotalSum { get; set; }
     }
 }

@@ -37,6 +37,7 @@ namespace Wu17Picks.Web.Controllers
             ViewBag.total = 0;
             return RedirectToAction("Index", "Gallery");
         }
+
         [Route("add/{id}")]
         public IActionResult AddImage(int id)
         {
