@@ -13,7 +13,7 @@
     <!--For developement-->
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link href="~/css/site.css" rel="stylesheet" />
     </environment>
     <!--For Production-->
     <environment exclude="Development">
@@ -81,16 +81,10 @@
                         <!--For Production-->
                         <environment exclude="Development">
                             <script src="https://wupickscdn.azureedge.net/lib/jquery/dist/jquery.js"
-                                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                                    asp-fallback-test="window.jQuery"
-                                    crossorigin="anonymous"
-                                    integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+                                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js">
                             </script>
                             <script src="https://wupickscdn.azureedge.net/lib/bootstrap/dist/js/bootstrap.js"
-                                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                                    crossorigin="anonymous"
-                                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+                                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js">
                             </script>
                         </environment>
                     </body>

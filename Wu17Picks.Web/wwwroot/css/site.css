@@ -90,10 +90,9 @@
 .drop-shadow {
     box-shadow: 0 10px 18px rgba(0,0,0,0.2), 0 5px 5px rgba(0,0,0,0.2);
 }
-
 body {
     font-family: 'Oxygen', sans-serif;
-    padding-bottom: 20px;
+    padding-bottom: 18px;
 }
 
 .body-content {
