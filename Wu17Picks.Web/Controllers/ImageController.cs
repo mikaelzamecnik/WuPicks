@@ -53,7 +53,6 @@ namespace Wu17Picks.Web.Controllers
             var content = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
-            // Get Ref to a block blob
             var blockBlob = container.GetBlockBlobReference(fileName);
             await blockBlob.UploadFromStreamAsync(file.OpenReadStream());
             await _imageService.SetImage(title, tags, categoryid, blockBlob.Uri);
