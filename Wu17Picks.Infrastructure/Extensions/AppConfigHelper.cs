@@ -4,14 +4,18 @@ using System.Text;
 
 namespace Wu17Picks.Infrastructure.Extensions
 {
-    public class AppSettingsHelper
+    public class AppConfigHelper
     {
-        public AppSettingsHelper()
+        public AppConfigHelper()
         {
             //edit values in appsettings.json
             AzureStorageConnectionString = "ConnectionStringKey";
+            BasePath = "FirstStoragePath";
+            AuxPath = "SecondaryStoragePath";
         }
 
         public string AzureStorageConnectionString { get; set; }
+        public string BasePath { get; set; }
+        public string AuxPath { get; set; }
     }
 }

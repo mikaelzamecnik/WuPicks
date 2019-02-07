@@ -8,10 +8,9 @@
         {
         <div class="gallery-image-container drop-shadow">
             <a asp-controller="Gallery" asp-action="Detail" asp-route-id="@image.Id">
-                <div class="gallery-image" style="background-image:url(@image.Url)">
+                <div class="gallery-image" style="background-image:url(@ViewData["FilePath"]@image.FileName)">
                 </div>
             </a>
-            <!--Just needed for the categoryName-->
             @foreach (var cat in Model.Categories) { }
             <div class="text-image">@image.Category.Name<br /><small>@image.Created</small></div>
         </div>

@@ -21,8 +21,6 @@ namespace Wu17Picks.Web.Controllers
         private readonly ICategory _categoryService;
         private readonly string[] _supportedMimeTypes = { "image/png", "image/jpeg", "image/jpg" };
 
-        private string AzureConnectionString { get; }
-
         public ImageController(IImage imageService, ICategory categoryService, IDistributedCache cache)
         {
             _imageService = imageService;
@@ -41,7 +39,7 @@ namespace Wu17Picks.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadNewImage(IFormFile file, string tags, string title, int categoryid)
+        public async Task<IActionResult> UploadNewImage(IFormFile file, string tags, string title, int categoryId)
         {
             if (!_supportedMimeTypes.Contains(file.ContentType.ToString().ToLower()))
             {
@@ -55,7 +53,7 @@ namespace Wu17Picks.Web.Controllers
 
             var blockBlob = container.GetBlockBlobReference(fileName);
             await blockBlob.UploadFromStreamAsync(file.OpenReadStream());
-            await _imageService.SetImage(title, tags, categoryid, blockBlob.Uri);
+            await _imageService.SetImage(title, tags, categoryId, blockBlob.Uri);
 
             return RedirectToAction("Index", "Gallery");
         }

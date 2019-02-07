@@ -9,7 +9,7 @@ namespace Wu17Picks.Data.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTime Created { get; set; }
-        public string Url { get; set; }
+        public string FileName { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
         public virtual IEnumerable<ImageTag> Tags { get; set; }

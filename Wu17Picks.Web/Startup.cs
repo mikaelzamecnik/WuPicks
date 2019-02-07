@@ -29,7 +29,7 @@ namespace Wu17Picks.Web
             services.AddTransient<IImage, ImageService>();
             services.AddTransient<ICategory, CategoryService>();
 
-            services.Configure<AppSettingsHelper>(Configuration.GetSection("AzureSettings"));
+            services.Configure<AppConfigHelper>(Configuration.GetSection("AzureSettings"));
 
             services.AddDistributedRedisCache(options =>
             {
@@ -40,7 +40,7 @@ namespace Wu17Picks.Web
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".Picks.Cart.Session";
-                options.IdleTimeout = TimeSpan.FromDays(7);
+                options.IdleTimeout = TimeSpan.FromMinutes(1);
             });
             services.AddMvc();
         }

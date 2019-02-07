@@ -18,13 +18,13 @@ namespace Wu17Picks.Services
     public class ImageService : IImage
     {
         private const string _key = "images";
-        private readonly AppSettingsHelper _appSettings;
+        private readonly AppConfigHelper _appConfig;
         private readonly ApplicationDbContext _ctx;
         private IDistributedCache _cache;
-        public ImageService(ApplicationDbContext ctx, IOptions<AppSettingsHelper> settings, IDistributedCache cache)
+        public ImageService(ApplicationDbContext ctx, IOptions<AppConfigHelper> appConfig, IDistributedCache cache)
         {
             _ctx = ctx;
-            _appSettings = settings.Value;
+            _appConfig = appConfig.Value;
             _cache = cache;
         }
 
@@ -58,7 +58,7 @@ namespace Wu17Picks.Services
                     Created = x.Created,
                     CategoryId = x.CategoryId,
                     Category = x.Category,
-                    Url = x.Url
+                    FileName = x.FileName
 
                 })
                 .ToList();
@@ -69,21 +69,18 @@ namespace Wu17Picks.Services
 
         public GalleryImage GetById(int id)
         {
-            return GetAll().Where(img => img.Id == id).First();
+            return _ctx.GalleryImages.Find(id);
         }
 
         public IEnumerable<GalleryImage> GetWithTags(string tag)
         {
-
-
-            return GetAll()
-                .Where(img => img.Tags
+            return GetAll().Where(img => img.Tags
                 .Any(t => t.Description == tag));
         }
 
         public CloudBlobContainer GetBlobContainer(string containerName)
         {
-            var storageAccount = CloudStorageAccount.Parse(_appSettings.AzureStorageConnectionString);
+            var storageAccount = CloudStorageAccount.Parse(_appConfig.AzureStorageConnectionString);
             var blobClient = storageAccount.CreateCloudBlobClient();
             return blobClient.GetContainerReference(containerName);
         }
@@ -97,7 +94,7 @@ namespace Wu17Picks.Services
             {
                 Title = title,
                 Tags = ParseTags(tags),
-                Url = uri.AbsoluteUri,
+                FileName = uri.AbsolutePath,
                 Created = DateTime.Now,
                 CategoryId = categoryid
             };

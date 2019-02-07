@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Options;
+using Wu17Picks.Data.Entities;
 using Wu17Picks.Infrastructure.Extensions;
 using Wu17Picks.Infrastructure.Interfaces;
 using Wu17Picks.Web.Models;
@@ -16,13 +16,28 @@ namespace Wu17Picks.Web.Controllers
     {
         private readonly IImage _imageService;
         private readonly ICategory _categoryService;
-        public GalleryController(IImage imageService, ICategory categoryService)
+        private readonly AppConfigHelper _appConfig;
+        public GalleryController(IImage imageService,
+            ICategory categoryService,
+            IOptions<AppConfigHelper> appConfig)
         {
             _categoryService = categoryService;
             _imageService = imageService;
+            _appConfig = appConfig.Value;
         }
         public IActionResult Index(string selectedCategory)
         {
+
+            var first = _appConfig.BasePath;
+            var second = _appConfig.AuxPath;
+
+            if (first == null)
+            {
+                ViewData["FilePath"] = second;
+            } else
+            {
+                ViewData["FilePath"] = first;
+            }
             int categoryId = 0;
             if (!string.IsNullOrEmpty(selectedCategory))
             {
@@ -45,22 +60,40 @@ namespace Wu17Picks.Web.Controllers
 
             return View(model);
         }
-
         public IActionResult Detail(int id)
         {
-            var image = _imageService.GetById(id);
 
-            var model = new GalleryDetailModel()
+            var first = _appConfig.BasePath;
+            var second = _appConfig.AuxPath;
+
+            if (first == null)
             {
-                Id = image.Id,
-                Title = image.Title,
-                CreatedOn = image.Created,
-                Url = image.Url,
-                CategoryId = image.CategoryId,
-                Tags = image.Tags.Select(t => t.Description).ToList()
-            };
+                ViewData["FilePath"] = second;
+            }
+            else
+            {
+                ViewData["FilePath"] = first;
+            }
+            var image = _imageService.GetById(id);
+            try
+            {
+                var model = new GalleryDetailModel()
+                {
+                    Id = image.Id,
+                    Title = image.Title,
+                    CreatedOn = image.Created,
+                    FileName = image.FileName,
+                    CategoryId = image.CategoryId
+                    // Need to redo tags service dont work atm
+                    //Tags = image.Tags.Select(t => t.Description).ToList()
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
 
-            return View(model);
+                throw e;
+            }  
         }
         public IActionResult Error()
         {

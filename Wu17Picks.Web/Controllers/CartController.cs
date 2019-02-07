@@ -7,6 +7,7 @@ using System.Net;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Wu17Picks.Data.Entities;
 using Wu17Picks.Infrastructure.Extensions;
 using Wu17Picks.Infrastructure.Interfaces;
@@ -19,14 +20,29 @@ namespace Wu17Picks.Web.Controllers
 
         private readonly IImage _imageService;
         private readonly IHostingEnvironment _hostingEnvironment;
-        public CartController(IImage imageService, IHostingEnvironment hostingEnvironment)
+        private readonly AppConfigHelper _appConfig;
+        public CartController(IImage imageService, 
+            IHostingEnvironment hostingEnvironment,
+            IOptions<AppConfigHelper> appConfig)
         {
             _imageService = imageService;
             _hostingEnvironment = hostingEnvironment;
+            _appConfig = appConfig.Value;
         }
 
         public IActionResult Index()
         {
+            var first = _appConfig.BasePath;
+            var second = _appConfig.AuxPath;
+
+            if (first == null)
+            {
+                ViewData["FilePath"] = second;
+            }
+            else
+            {
+                ViewData["FilePath"] = first;
+            }
             var cart = SessionHelper.Get<List<Item>>(HttpContext.Session, "cart");
             ViewBag.cart = cart;
             if (cart != null)
@@ -86,10 +102,9 @@ namespace Wu17Picks.Web.Controllers
 
         public IActionResult DownloadAsZip()
         {
+            var filePath = _appConfig.BasePath;
             var cart = HttpContext.Session.Get<List<Item>>("cart")
-                .ConvertAll(item => item.GalleryImage.Url);
-
-            cart[0].Split("");
+                .ConvertAll(item => item.GalleryImage.FileName);
 
             if (cart == null)
                 return BadRequest();
@@ -101,7 +116,7 @@ namespace Wu17Picks.Web.Controllers
                 using (var imageCompression = new ZipArchive(ms, ZipArchiveMode.Create, true))
                     foreach (var image in cart)
                         // Does Looping Trough strings of Url dresses work ?
-                        imageCompression.CreateEntry(image, CompressionLevel.Fastest);
+                        imageCompression.CreateEntry($"{filePath}{image}", CompressionLevel.Fastest);
                 ms.Position = 0;
                 bytes = ms.ToArray();
             }

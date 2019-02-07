@@ -10,7 +10,7 @@ namespace Wu17Picks.Web.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTime CreatedOn { get; set; }
-        public string Url { get; set; }
+        public string FileName { get; set; }
         public int CategoryId { get; set; }
         public GalleryImage Images { get; set; }
         public Category Categories { get; set; }

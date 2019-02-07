@@ -80,7 +80,7 @@
 #upload-form {
     padding: 60px;
     margin: auto;
-    width: 50%;
+    width: 75%;
 }
 
 .upload-container {
@@ -93,7 +93,6 @@
 
 body {
     font-family: 'Oxygen', sans-serif;
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
