@@ -113,7 +113,6 @@
       triggerTransitionEnd: function triggerTransitionEnd(element) {
         $$$1(element).trigger(TRANSITION_END);
       },
-      // TODO: Remove in v5
       supportsTransitionEnd: function supportsTransitionEnd() {
         return Boolean(TRANSITION_END);
       },

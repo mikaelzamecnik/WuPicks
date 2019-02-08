@@ -41,6 +41,7 @@ namespace Wu17Picks.Web.Controllers
             var first = _appConfig.BasePath;
             var second = _appConfig.AuxPath;
 
+            // TODO Check if exists
             if (first == null)
             {
                 ViewData["FilePath"] = second;
@@ -106,7 +107,8 @@ namespace Wu17Picks.Web.Controllers
 
         public FileResult DownloadAsZip()
         {
-            _logger.LogError("Error on DownloadAsZip when published");
+            _logger.LogError("||||||||||||||||||DownLoadAsZip Log|||||||||||||");
+
             // Downloading Images to a folder
             var filePath = _appConfig.BasePath;
             var cart = HttpContext.Session.Get<List<Item>>("cart")

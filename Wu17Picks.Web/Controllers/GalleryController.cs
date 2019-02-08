@@ -51,7 +51,6 @@ namespace Wu17Picks.Web.Controllers
             var model = new GalleryIndexModel()
             {
                 Images = imageList,
-                SearchQuery = "",
                 Categories = categorytext,
                 SelectedCategory = selectedCategory
             };
