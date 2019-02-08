@@ -30,7 +30,7 @@ namespace Wu17Picks.Web.Controllers
 
             var first = _appConfig.BasePath;
             var second = _appConfig.AuxPath;
-
+            // How to check if Url works ?
             if (first == null)
             {
                 ViewData["FilePath"] = second;

@@ -4,12 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>P I C K S</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="~/gfx/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="~/gfx/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="~/gfx/favicon-16x16.png">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/gfx/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="~/gfx/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="~/gfx/favicon-16x16.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet" />
     <!--For developement-->
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -17,10 +17,10 @@
     </environment>
     <!--For Production-->
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://wupickscdn.azureedge.net/css/site.css" asp-append-version="true"
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true"
               asp-fallback-href="~/css/site.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="https://wupickscdn.azureedge.net/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true"
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
     </environment>
@@ -58,7 +58,7 @@
                     <a asp-controller="Cart" asp-action="Index" class="menu-text">
                         <i class="fas fa-shopping-cart">
                         </i> Show Cart  <span class="badge badge-success"
-                                              style="background:pink;color:black;">@ViewBag.total</span>
+      style="background:pink;color:black;">@ViewData["total"]</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -80,10 +80,10 @@
                         </environment>
                         <!--For Production-->
                         <environment exclude="Development">
-                            <script src="https://wupickscdn.azureedge.net/lib/jquery/dist/jquery.js"
+                            <script src="~/lib/jquery/dist/jquery.min.js"
                                     asp-fallback-src="~/lib/jquery/dist/jquery.min.js">
                             </script>
-                            <script src="https://wupickscdn.azureedge.net/lib/bootstrap/dist/js/bootstrap.js"
+                            <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                                     asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js">
                             </script>
                         </environment>

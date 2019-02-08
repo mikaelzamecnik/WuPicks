@@ -5,12 +5,14 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Wu17Picks.Data.Entities;
 using Wu17Picks.Infrastructure.Extensions;
 using Wu17Picks.Infrastructure.Interfaces;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Wu17Picks.Web.Controllers
 {
@@ -47,10 +49,10 @@ namespace Wu17Picks.Web.Controllers
             ViewBag.cart = cart;
             if (cart != null)
             {
-                ViewBag.total = cart.Sum(item => item.Quantity);
+                ViewData["total"] = cart.Sum(item => item.Quantity);
                 return View();
             }
-            ViewBag.total = 0;
+            ViewData["total"] = 0;
             return RedirectToAction("Index", "Gallery");
         }
 
@@ -95,33 +97,48 @@ namespace Wu17Picks.Web.Controllers
                 cart.Clear();
             }
             SessionHelper.Set(HttpContext.Session, "cart", cart);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Gallery");
         }
 
-        // TODO download as Zip
-
-        public IActionResult DownloadAsZip()
+        public FileResult DownloadAsZip()
         {
+            // Downloading Images to a folder
             var filePath = _appConfig.BasePath;
             var cart = HttpContext.Session.Get<List<Item>>("cart")
                 .ConvertAll(item => item.GalleryImage.FileName);
+            string rootPath = _hostingEnvironment.WebRootPath;
+            using (WebClient client = new WebClient())
+            {
+                foreach (var image in cart)
+                client.DownloadFile(filePath + image, rootPath + image);
+            }
 
-            if (cart == null)
-                return BadRequest();
+            // Starting to add the dowloaded files to zip
+            string newPath = _hostingEnvironment.WebRootPath + "/images/";
             byte[] bytes;
             DateTime fileName = DateTime.Now;
 
             using (var ms = new MemoryStream())
             {
                 using (var imageCompression = new ZipArchive(ms, ZipArchiveMode.Create, true))
-                    foreach (var image in cart)
-                        // Does Looping Trough strings of Url dresses work ?
-                        imageCompression.CreateEntry($"{filePath}{image}", CompressionLevel.Fastest);
+                    foreach (var image in Directory.GetFiles(newPath))
+                        imageCompression.CreateEntryFromFile(image, Path.GetFileName(image), CompressionLevel.Fastest);
                 ms.Position = 0;
                 bytes = ms.ToArray();
             }
 
-            return File(bytes, "application/zip", $"{fileName}.zip");
+            // Purging the folder from the temporary images
+            DirectoryInfo di = new DirectoryInfo(newPath);
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+            // Returning Zip file to client
+            return File(bytes, "application/zip", $"PicksImages-{fileName}.zip");
         }
         private int Exists(List<Item> cart, int id)
         {
