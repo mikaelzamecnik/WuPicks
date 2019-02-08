@@ -1,5 +1,4 @@
-﻿
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Wu17Picks.Data.Entities;
 using Wu17Picks.Infrastructure.Interfaces;

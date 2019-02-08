@@ -15,10 +15,5 @@ namespace Wu17Picks.Web.Models
         public GalleryImage Images { get; set; }
         public Category Categories { get; set; }
         public List<string> Tags { get; set; }
-
-        public GalleryDetailModel()
-        {
-            Id = Id;
-        }
     }
 }

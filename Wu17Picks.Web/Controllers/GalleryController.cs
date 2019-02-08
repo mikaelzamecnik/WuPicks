@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Wu17Picks.Data.Entities;
 using Wu17Picks.Infrastructure.Extensions;
 using Wu17Picks.Infrastructure.Interfaces;
 using Wu17Picks.Web.Models;
@@ -75,8 +73,7 @@ namespace Wu17Picks.Web.Controllers
                 ViewData["FilePath"] = first;
             }
             var image = _imageService.GetById(id);
-            try
-            {
+
                 var model = new GalleryDetailModel()
                 {
                     Id = image.Id,
@@ -87,13 +84,7 @@ namespace Wu17Picks.Web.Controllers
                     // Need to redo tags service dont work atm
                     //Tags = image.Tags.Select(t => t.Description).ToList()
                 };
-                return View(model);
-            }
-            catch (Exception e)
-            {
-
-                throw e;
-            }  
+                return View(model); 
         }
         public IActionResult Error()
         {

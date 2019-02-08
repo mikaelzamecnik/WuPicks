@@ -5,14 +5,12 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Wu17Picks.Data.Entities;
 using Wu17Picks.Infrastructure.Extensions;
 using Wu17Picks.Infrastructure.Interfaces;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Wu17Picks.Web.Controllers
 {
@@ -23,7 +21,7 @@ namespace Wu17Picks.Web.Controllers
         private readonly IImage _imageService;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly AppConfigHelper _appConfig;
-        public CartController(IImage imageService, 
+        public CartController(IImage imageService,
             IHostingEnvironment hostingEnvironment,
             IOptions<AppConfigHelper> appConfig)
         {
@@ -97,7 +95,7 @@ namespace Wu17Picks.Web.Controllers
                 cart.Clear();
             }
             SessionHelper.Set(HttpContext.Session, "cart", cart);
-            return RedirectToAction("Index","Gallery");
+            return RedirectToAction("Index", "Gallery");
         }
 
         public FileResult DownloadAsZip()
@@ -110,7 +108,7 @@ namespace Wu17Picks.Web.Controllers
             using (WebClient client = new WebClient())
             {
                 foreach (var image in cart)
-                client.DownloadFile(filePath + image, rootPath + image);
+                    client.DownloadFile(filePath + image, rootPath + image);
             }
 
             // Starting to add the dowloaded files to zip
@@ -122,7 +120,9 @@ namespace Wu17Picks.Web.Controllers
             {
                 using (var imageCompression = new ZipArchive(ms, ZipArchiveMode.Create, true))
                     foreach (var image in Directory.GetFiles(newPath))
+                    {
                         imageCompression.CreateEntryFromFile(image, Path.GetFileName(image), CompressionLevel.Fastest);
+                    }
                 ms.Position = 0;
                 bytes = ms.ToArray();
             }

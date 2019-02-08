@@ -5,10 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Microsoft.Net.Http.Headers;
-using Wu17Picks.Infrastructure.Extensions;
 using Wu17Picks.Infrastructure.Interfaces;
 using Wu17Picks.Web.Models;
 
@@ -43,12 +39,9 @@ namespace Wu17Picks.Web.Controllers
         {
             if (!_supportedMimeTypes.Contains(file.ContentType.ToString().ToLower()))
             {
-                throw new NotSupportedException("Only jpeg and png are supported");
+                return RedirectToAction("Index", "Gallery");
             }
-
             var container = _imageService.GetBlobContainer("images");
-
-            var content = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
             var blockBlob = container.GetBlockBlobReference(fileName);
