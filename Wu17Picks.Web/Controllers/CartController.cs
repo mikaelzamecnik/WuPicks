@@ -7,6 +7,7 @@ using System.Net;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Wu17Picks.Data.Entities;
 using Wu17Picks.Infrastructure.Extensions;
@@ -21,13 +22,18 @@ namespace Wu17Picks.Web.Controllers
         private readonly IImage _imageService;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly AppConfigHelper _appConfig;
-        public CartController(IImage imageService,
+        private readonly ILogger<CartController> _logger;
+
+        public CartController(
+            IImage imageService,
             IHostingEnvironment hostingEnvironment,
-            IOptions<AppConfigHelper> appConfig)
+            IOptions<AppConfigHelper> appConfig,
+            ILogger<CartController> logger)
         {
             _imageService = imageService;
             _hostingEnvironment = hostingEnvironment;
             _appConfig = appConfig.Value;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -100,6 +106,7 @@ namespace Wu17Picks.Web.Controllers
 
         public FileResult DownloadAsZip()
         {
+            _logger.LogError("Error on DownloadAsZip when published");
             // Downloading Images to a folder
             var filePath = _appConfig.BasePath;
             var cart = HttpContext.Session.Get<List<Item>>("cart")
@@ -137,6 +144,7 @@ namespace Wu17Picks.Web.Controllers
             {
                 dir.Delete(true);
             }
+            
             // Returning Zip file to client
             return File(bytes, "application/zip", $"PicksImages-{fileName}.zip");
         }
