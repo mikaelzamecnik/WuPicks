@@ -96,11 +96,12 @@ namespace Wu17Picks.Web.Controllers
             if (id > 0)
             {
                 cart.RemoveAt(index);
+                SessionHelper.Set(HttpContext.Session, "cart", cart);
+                return RedirectToAction("Index");
             }
+
             if (id == 0)
-            {
-                cart.Clear();
-            }
+            cart.Clear();
             SessionHelper.Set(HttpContext.Session, "cart", cart);
             return RedirectToAction("Index", "Gallery");
         }
