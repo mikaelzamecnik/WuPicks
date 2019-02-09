@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -15,6 +16,7 @@ namespace Wu17Picks.Web.Controllers
         private readonly IImage _imageService;
         private readonly ICategory _categoryService;
         private readonly AppConfigHelper _appConfig;
+        private string filePath = "";
         public GalleryController(IImage imageService,
             ICategory categoryService,
             IOptions<AppConfigHelper> appConfig)
@@ -23,19 +25,15 @@ namespace Wu17Picks.Web.Controllers
             _imageService = imageService;
             _appConfig = appConfig.Value;
         }
+
+        
         public IActionResult Index(string selectedCategory)
         {
 
-            var first = _appConfig.BasePath;
-            var second = _appConfig.AuxPath;
-            // How to check if Url works ?
-            if (first == null)
-            {
-                ViewData["FilePath"] = second;
-            } else
-            {
-                ViewData["FilePath"] = first;
-            }
+            bool fileExist = _imageService.URLExists(_appConfig.BasePath);
+            if (fileExist) { filePath = _appConfig.BasePath; }
+            if(!fileExist) { filePath = _appConfig.AuxPath; }
+
             int categoryId = 0;
             if (!string.IsNullOrEmpty(selectedCategory))
             {
@@ -48,11 +46,13 @@ namespace Wu17Picks.Web.Controllers
                 .Where(p => selectedCategory == null ||
                 p.Category.Name.Equals(selectedCategory, StringComparison.InvariantCultureIgnoreCase))
                 .OrderByDescending(i=> i.Created);
+
             var model = new GalleryIndexModel()
             {
                 Images = imageList,
                 Categories = categorytext,
-                SelectedCategory = selectedCategory
+                SelectedCategory = selectedCategory,
+                FilePath = filePath
             };
 
             return View(model);
@@ -60,17 +60,10 @@ namespace Wu17Picks.Web.Controllers
         public IActionResult Detail(int id)
         {
 
-            var first = _appConfig.BasePath;
-            var second = _appConfig.AuxPath;
+            bool fileExist = _imageService.URLExists(_appConfig.BasePath);
+            if (fileExist) { filePath = _appConfig.BasePath; }
+            if (!fileExist) { filePath = _appConfig.AuxPath; }
 
-            if (first == null)
-            {
-                ViewData["FilePath"] = second;
-            }
-            else
-            {
-                ViewData["FilePath"] = first;
-            }
             var image = _imageService.GetById(id);
 
                 var model = new GalleryDetailModel()
@@ -79,7 +72,9 @@ namespace Wu17Picks.Web.Controllers
                     Title = image.Title,
                     CreatedOn = image.Created,
                     FileName = image.FileName,
-                    CategoryId = image.CategoryId
+                    CategoryId = image.CategoryId,
+                    FilePath = filePath
+                    
                     // Need to redo tags service dont work atm
                     //Tags = image.Tags.Select(t => t.Description).ToList()
                 };

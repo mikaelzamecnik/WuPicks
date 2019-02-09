@@ -12,6 +12,7 @@ using Wu17Picks.Infrastructure.Interfaces;
 using Wu17Picks.Infrastructure.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Caching.Distributed;
+using System.Net;
 
 namespace Wu17Picks.Services
 {
@@ -123,6 +124,26 @@ namespace Wu17Picks.Services
                 Description = tag
             }).ToList();
 
+        }
+
+        public bool URLExists(string url)
+        {
+            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)webRequest.GetResponse();
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    return true;
+                }
+                return false;
+
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

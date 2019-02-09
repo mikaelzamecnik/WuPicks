@@ -4,7 +4,7 @@
     <div class="container body-content">
         <div class="row image-detail-container">
             <div class="image-detail">
-                <img src="@ViewData["FilePath"]@Model.FileName" style="width: 50%; height: 50%;" alt="@Model.Title" />
+                <img src="@Model.FilePath@Model.FileName" style="width: 50%; height: 50%;" alt="@Model.Title" />
             </div>
         </div>
         <div class="row image-detail-meta">
@@ -17,7 +17,7 @@
                 Back to Gallery
             </a>
             <div style="float:right;">
-                <a class="btn btn-primary" href="@ViewData["FilePath"]@Model.FileName">
+                <a class="btn btn-primary" href="@Model.FilePath@Model.FileName">
                     Download
                 </a>
                 <a class="btn btn-success" asp-controller="Cart" asp-action="AddImage" asp-route-id="@Model.Id">

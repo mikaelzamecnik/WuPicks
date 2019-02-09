@@ -8,7 +8,7 @@
         {
         <div class="gallery-image-container drop-shadow">
             <a asp-controller="Gallery" asp-action="Detail" asp-route-id="@image.Id">
-                <div class="gallery-image" style="background-image:url(@ViewData["FilePath"]@image.FileName)">
+                <div class="gallery-image" style="background-image:url(@Model.FilePath@image.FileName)">
                 </div>
             </a>
             @foreach (var cat in Model.Categories) { }

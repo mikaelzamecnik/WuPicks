@@ -12,13 +12,14 @@ using Microsoft.Extensions.Options;
 using Wu17Picks.Data.Entities;
 using Wu17Picks.Infrastructure.Extensions;
 using Wu17Picks.Infrastructure.Interfaces;
+using Wu17Picks.Web.Models;
 
 namespace Wu17Picks.Web.Controllers
 {
     public class CartController : Controller
     {
         // TODO Refactor this entire controller
-
+        private string filePath = "";
         private readonly IImage _imageService;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly AppConfigHelper _appConfig;
@@ -38,19 +39,12 @@ namespace Wu17Picks.Web.Controllers
 
         public IActionResult Index()
         {
-            var first = _appConfig.BasePath;
-            var second = _appConfig.AuxPath;
+            bool fileExist = _imageService.URLExists(_appConfig.BasePath);
+            if (fileExist) { filePath = _appConfig.BasePath; }
+            if (!fileExist) { filePath = _appConfig.AuxPath; }
 
-            // TODO Check if exists
-            if (first == null)
-            {
-                ViewData["FilePath"] = second;
-            }
-            else
-            {
-                ViewData["FilePath"] = first;
-            }
             var cart = SessionHelper.Get<List<Item>>(HttpContext.Session, "cart");
+            ViewBag.FilePath = filePath;
             ViewBag.cart = cart;
             if (cart != null)
             {

@@ -17,5 +17,6 @@ namespace Wu17Picks.Infrastructure.Interfaces
         CloudBlobContainer GetBlobContainer(string containerName);
         Task SetImage(string title, string tags, int categoryid, Uri uri);
         List<ImageTag> ParseTags(string tags);
+        bool URLExists(string url);
     }
 }
