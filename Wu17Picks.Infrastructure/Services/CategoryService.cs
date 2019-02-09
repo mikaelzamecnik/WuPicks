@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,25 +23,27 @@ namespace Wu17Picks.Infrastructure.Services
 
         private List<Category> GetCache()
             => _cache.GetValue<List<Category>>(_key);
-
         private void SetCache(List<Category> toCache)
             => _cache.SetValue(_key, toCache);
+        public bool IsCategory(int categoryId)
+            => _ctx.Categories.Any(x => x.Id == categoryId);
 
-        public IEnumerable<Category> GetAll()
+        public IEnumerable<Category> Categories => _ctx.Categories;
+        public async Task<IEnumerable<Category>> GetAll()
         {
             var result = GetCache();
 
             if (result != null)
                 return result;
 
-            result = _ctx.Categories
+            result = await _ctx.Categories
                 .OrderBy(x => x.Name)
                 .Select(x => new Category()
                 {
                     Id = x.Id,
                     Name = x.Name
                 })
-                .ToList();
+                .ToListAsync();
 
             SetCache(result);
             return result;
@@ -49,7 +52,7 @@ namespace Wu17Picks.Infrastructure.Services
 
         public Category GetById(int id)
         {
-            return GetAll().Where(img => img.Id == id).First();
+            return _ctx.Categories.Find(id);
         }
         public async Task AddCategory(Category vm)
         {
@@ -59,7 +62,7 @@ namespace Wu17Picks.Infrastructure.Services
                 Name = vm.Name
             };
 
-            _ctx.Add(cat);
+            await _ctx.AddAsync(cat);
             await _ctx.SaveChangesAsync();
 
             var cached = GetCache();

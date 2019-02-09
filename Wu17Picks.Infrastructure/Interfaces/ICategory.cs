@@ -9,10 +9,7 @@ namespace Wu17Picks.Infrastructure.Interfaces
     public interface ICategory
     {
         Category GetById(int id);
-        IEnumerable<Category> GetAll();
+        Task <IEnumerable<Category>> GetAll();
         Task AddCategory(Category vm);
-
-        // of use?
-        //Task Delete(int id);
     }
 }

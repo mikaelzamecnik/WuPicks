@@ -27,7 +27,7 @@ namespace Wu17Picks.Web
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<IImage, ImageService>();
-            services.AddTransient<ICategory, CategoryService>();
+            services.AddScoped<ICategory, CategoryService>();
 
             services.Configure<AppConfigHelper>(Configuration.GetSection("AzureSettings"));
 
@@ -40,7 +40,7 @@ namespace Wu17Picks.Web
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".Picks.Cart.Session";
-                options.IdleTimeout = TimeSpan.FromMinutes(1);
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
             services.AddMvc();
         }

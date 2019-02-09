@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -26,8 +27,8 @@ namespace Wu17Picks.Web.Controllers
             _appConfig = appConfig.Value;
         }
 
-        
-        public IActionResult Index(string selectedCategory)
+
+        public async Task<IActionResult> Index(string selectedCategory)
         {
 
             bool fileExist = _imageService.URLExists(_appConfig.BasePath);
@@ -41,7 +42,7 @@ namespace Wu17Picks.Web.Controllers
                 if (cat != null) categoryId = cat.Id;
             }
 
-            var categorytext = _categoryService.GetAll();
+            var categorytext = await _categoryService.GetAll();
             var imageList = _imageService.GalleryImages
                 .Where(p => selectedCategory == null ||
                 p.Category.Name.Equals(selectedCategory, StringComparison.InvariantCultureIgnoreCase))
@@ -74,11 +75,11 @@ namespace Wu17Picks.Web.Controllers
                     FileName = image.FileName,
                     CategoryId = image.CategoryId,
                     FilePath = filePath
-                    
+
                     // Need to redo tags service dont work atm
                     //Tags = image.Tags.Select(t => t.Description).ToList()
                 };
-                return View(model); 
+                return View(model);
         }
         public IActionResult Error()
         {

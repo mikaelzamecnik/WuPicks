@@ -24,9 +24,9 @@ namespace Wu17Picks.Web.Controllers
             _cache = cache;
         }
 
-        public IActionResult Upload()
+        public async Task<IActionResult> Upload()
         {
-            var cat = _categoryService.GetAll();
+            var cat = await _categoryService.GetAll();
             var model = new UploadImageModel()
             {
                 Categories = cat

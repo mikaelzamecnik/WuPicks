@@ -58,7 +58,6 @@ namespace Wu17Picks.Services
                     Title = x.Title,
                     Created = x.Created,
                     CategoryId = x.CategoryId,
-                    Category = x.Category,
                     FileName = x.FileName
 
                 })
@@ -128,6 +127,7 @@ namespace Wu17Picks.Services
 
         public bool URLExists(string url)
         {
+            // TODO GetResponse fails and return false (Aux adress)
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
             try
             {
